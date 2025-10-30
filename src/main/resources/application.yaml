@@ -1,0 +1,38 @@
+server:
+  port: 2424
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: SE_445_G_ETL
+
+  datasource:
+    staging:
+      jdbc-url: jdbc:mysql://localhost:3306/db_staging
+      username:
+      password:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    performance:
+      jdbc-url: jdbc:mysql://localhost:3306/db_performance
+      username:
+      password:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username:
+    password:
+    listener:
+      simple:
+        concurrency: 1
+        max-concurrency: 1
