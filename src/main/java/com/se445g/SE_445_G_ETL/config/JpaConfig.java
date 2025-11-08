@@ -10,6 +10,7 @@ import java.util.HashMap;
 @Configuration
 public class JpaConfig {
 
+    @SuppressWarnings("removal")
     @Bean
     public EntityManagerFactoryBuilder entityManagerFactoryBuilder() {
         return new EntityManagerFactoryBuilder(

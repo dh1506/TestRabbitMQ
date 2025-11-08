@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -15,28 +13,55 @@ import java.time.LocalDateTime;
 @Builder
 public class PerformanceDTO {
 
-    // TRƯỜNG MỚI ĐỂ PHÂN LOẠI
-    // Sẽ là "EMPLOYEEPERFORMANCE", "REVIEW", hoặc "TASKPERFORMANCE"
+    // TRƯỜNG PHÂN LOẠI
+    // Sẽ là "REVIEW", "EMPLOYEE_PERFORMANCE", "TASK_PERFORMANCE",
+    // "DEPT_PERFORMANCE", "KPI_METRIC"
     private String recordType;
 
-    // --- Thông tin EmployeePerformance ---
-    private Integer id;
-    private Integer employeeId;
-    private BigDecimal performanceScore;
-    private String comments;
-    private LocalDateTime createdAt;
-
-    // --- Thông tin Review (được flatten ra) ---
+    // =====================
+    // Performance Review Fields
+    // =====================
     private Integer reviewId;
     private String period;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String reviewDescription;
+    private String reviewDescription; // Đổi tên để tránh trùng lặp
 
-    // --- Thông tin TaskPerformance (nếu nhiều task thì gửi từng task 1 hoặc ghép
-    // chuỗi JSON) ---
+    // =====================
+    // Employee Performance Fields
+    // =====================
+    private Integer employeePerformanceId; // Đổi tên từ 'id' cho rõ ràng
+    private Integer employeeId;
+    // reviewId đã có ở trên
+    private Integer performanceScore;
+    private String comments;
+    private LocalDateTime createdAt;
+
+    // =====================
+    // Task Performance Fields
+    // =====================
     private Integer taskId;
+    // employeePerformanceId đã có ở trên
     private String taskName;
-    private BigDecimal taskScore;
-    private String taskNote;
+    private Integer taskScore;
+    private String note;
+
+    // =====================
+    // Department Performance Fields
+    // =====================
+    private Integer deptPerfId;
+    private Integer departmentId;
+    // reviewId đã có ở trên
+    private Double averageScore;
+    private String ranking;
+    private String remarks;
+
+    // =====================
+    // Kpi Metrics Fields
+    // =====================
+    private Integer kpiId;
+    private String kpiName;
+    private String kpiDescription; // Đổi tên để tránh trùng lặp
+    private Double weight;
+    private String category;
 }

@@ -1,50 +1,38 @@
 package com.se445g.SE_445_G_ETL.entity.staging;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "stg_employee_performance")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class STG_EmployeePerformance {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "employee_id", nullable = false)
-    private Integer employeeId; // Liên kết đến hệ thống staging
+    private Integer employeeId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id", nullable = false)
-    private STG_PerformanceReview review;
+    private Integer reviewId;
 
-    @Column(name = "performance_score", precision = 4, scale = 2)
-    private BigDecimal performanceScore;
+    private Integer performanceScore;
 
     private String comments;
 
-    @Column(name = "created_at")
-    @Builder.Default
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @OneToMany(mappedBy = "employeePerformance", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<STG_TaskPerformance> tasks;
+    private LocalDateTime createdAt;
 }

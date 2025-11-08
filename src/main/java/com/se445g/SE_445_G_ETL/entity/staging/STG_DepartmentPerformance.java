@@ -12,23 +12,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "stg_task_performance")
+@Table(name = "stg_department_performance")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class STG_TaskPerformance {
+public class STG_DepartmentPerformance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer taskId;
+    private Integer deptPerfId;
 
-    private Integer employeePerformanceId;
+    private Integer departmentId;
 
-    private String taskName;
+    private Integer reviewId;
 
-    private Integer taskScore;
+    private Double averageScore;
 
-    private String note;
+    private String ranking;
+
+    private String remarks;
+
 }

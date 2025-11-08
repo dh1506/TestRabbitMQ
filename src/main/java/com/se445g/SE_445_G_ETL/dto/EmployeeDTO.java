@@ -24,21 +24,33 @@ public class EmployeeDTO {
     private Integer employeeId;
     private String fullName;
     private String gender;
-    private LocalDate birthDate;
+    private LocalDate dateOfBirth;
+    private String hometown;
+    private String phone;
+    private String email;
+    private String educationLevel;
     private String position;
+    private LocalDate hireDate;
+    private String employeeStatus;
 
     // =====================
     // Thông tin phòng ban
     // =====================
     private Integer departmentId;
     private String departmentName;
-    private String location;
+    private String departmentLocation;
+    private String departmentPhone;
+    private BigDecimal departmentBudgetVnd;
+    private Integer managerId;
 
     // =====================
     // Thông tin lương
     // =====================
-    private BigDecimal baseSalary;
-    private BigDecimal bonus;
-    private Integer month;
-    private Integer year;
+    private Integer salaryId;
+    private BigDecimal amountVnd;
+    private String currency;
+    private String payFrequency;
+    private BigDecimal bonusVnd;
+    private LocalDate effectiveFrom;
+    private LocalDate effectiveTo;
 }

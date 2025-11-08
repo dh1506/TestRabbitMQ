@@ -1,5 +1,11 @@
-﻿department_id,department_name,location
-101,Công nghệ thông tin,Hà Nội
-102,Kế toán,TP.HCM
-103,Maketing,Đà Nẵng
-104,SEO,Đà Nẵng
+﻿department_id,name,location,phone,budget_vnd,manager_id
+1,Phòng Kinh doanh,Tầng 3,0585732563,2283080234,168
+2,Phòng Kỹ thuật,Tầng 2,0808736106,390421557,144
+3,Phòng Nhân sự,Tầng 2,0305462539,1123426863,20
+4,Phòng Tài chính,Tầng 10,0309315743,3429935826,77
+5,Phòng Marketing,Tầng 4,0344122611,4118893022,129
+6,Phòng Dự án,Tầng 7,0381694402,3716574002,1
+7,Phòng Vận hành,Tầng 5,0524481048,4382140374,164
+8,Phòng CSKH,Tầng 9,0233515487,2334544903,14
+9,Phòng QA/QC,Tầng 7,0393261860,468521426,147
+10,Phòng IT Hạ tầng,Tầng 2,0548704969,3469934697,67

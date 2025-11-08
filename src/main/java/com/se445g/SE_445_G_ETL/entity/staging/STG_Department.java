@@ -1,29 +1,53 @@
 package com.se445g.SE_445_G_ETL.entity.staging;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.math.BigDecimal;
+import java.util.List;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.data.domain.Persistable;
 
 @Entity
 @Table(name = "stg_departments")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class STG_Department {
+public class STG_Department implements Persistable<Integer> { // <--- IMPLEMENTS Persistable
 
     @Id
-    @Column(name = "department_id")
+    // KHÔNG CÓ @GeneratedValue
     private Integer departmentId;
 
-    @Column(name = "department_name", nullable = false, length = 100)
-    private String departmentName;
-
-    @Column(length = 100)
+    private String name;
     private String location;
+    private String phone;
+    private BigDecimal budgetVnd;
+    private Integer managerId;
+
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<STG_Employee> employees;
+
+    // === THÊM TRƯỜNG VÀ PHƯƠNG THỨC SAU ===
+
+    @Transient // Đánh dấu để JPA không lưu trường này vào DB
+    @Builder.Default
+    private boolean isNew = true;
+
+    @Override
+    public Integer getId() {
+        return this.departmentId;
+    }
+
+    @Override
+    public boolean isNew() {
+        // Luôn trả về true vì trong luồng ETL này, chúng ta chỉ INSERT
+        return this.isNew;
+    }
+
+    @PostLoad // Được gọi sau khi một entity được load từ DB
+    @PrePersist // Được gọi trước khi một entity được lưu (lần đầu)
+    void markNotNew() {
+        this.isNew = false;
+    }
 }

@@ -3,6 +3,10 @@ package com.se445g.SE_445_G_ETL.service.impl;
 import com.opencsv.CSVReader;
 import com.se445g.SE_445_G_ETL.config.RabbitMQConfig;
 import com.se445g.SE_445_G_ETL.dto.EmployeeDTO;
+import com.se445g.SE_445_G_ETL.entity.staging.STG_Department;
+import com.se445g.SE_445_G_ETL.entity.staging.STG_Employee;
+import com.se445g.SE_445_G_ETL.entity.staging.STG_Salary;
+import com.se445g.SE_445_G_ETL.mapper.EmployeeMapper;
 import com.se445g.SE_445_G_ETL.service.interf.CSVProducerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +23,7 @@ import java.time.LocalDate;
 public class CSVProducerServiceImpl implements CSVProducerService {
 
     private final RabbitTemplate rabbitTemplate;
+    private final EmployeeMapper employeeMapper; // Tiêm mapper vào
 
     // Định nghĩa các hằng số cho recordType
     private static final String TYPE_DEPT = "DEPARTMENT";
@@ -27,105 +32,121 @@ public class CSVProducerServiceImpl implements CSVProducerService {
 
     @Override
     public void sendCSVData(String departmentPath, String employeePath, String salaryPath) {
-        log.info("Bắt đầu quá trình gửi dữ liệu CSV (mô hình 1 queue)...");
+        log.info("Bắt đầu quá trình gửi dữ liệu CSV...");
 
-        // Chạy 3 quy trình độc lập, TẤT CẢ gửi về 1 queue
         sendDepartments(departmentPath);
         sendEmployees(employeePath);
         sendSalaries(salaryPath);
 
-        log.info("Đã gửi tất cả dữ liệu CSV lên RabbitMQ (1 queue).");
+        log.info("Đã gửi tất cả dữ liệu CSV lên RabbitMQ.");
     }
 
-    /**
-     * Đọc file departments.csv và gửi DTO loại DEPARTMENT
-     */
     private void sendDepartments(String departmentPath) {
         try (CSVReader reader = new CSVReader(new FileReader(departmentPath))) {
             String[] line;
-            reader.readNext(); // bỏ tiêu đề
+            reader.readNext(); // Bỏ qua dòng tiêu đề
             log.info("Đang gửi dữ liệu Departments...");
 
             while ((line = reader.readNext()) != null) {
-                // Chỉ điền thông tin Department
-                EmployeeDTO dto = EmployeeDTO.builder()
-                        .recordType(TYPE_DEPT) // ** Đặt loại **
+                // 1. Tạo entity tạm thời từ dữ liệu CSV
+                STG_Department tempDept = STG_Department.builder()
                         .departmentId(Integer.parseInt(line[0]))
-                        .departmentName(line[1])
+                        .name(line[1])
                         .location(line[2])
+                        .phone(line[3])
+                        .budgetVnd(new BigDecimal(line[4]))
+                        .managerId(Integer.parseInt(line[5]))
                         .build();
 
+                // 2. Dùng mapper để chuyển entity thành DTO
+                EmployeeDTO dto = employeeMapper.departmentToDto(tempDept);
+
+                // 3. Đặt recordType và gửi đi
+                dto.setRecordType(TYPE_DEPT);
                 sendToQueue(dto);
             }
             log.info("Hoàn thành gửi dữ liệu Departments.");
         } catch (Exception e) {
-            log.error("Lỗi khi đọc file departments.csv: {}", e.getMessage());
-            e.printStackTrace();
+            log.error("Lỗi khi đọc file departments.csv: {}", e.getMessage(), e);
         }
     }
 
-    /**
-     * Đọc file employees.csv và gửi DTO loại EMPLOYEE
-     */
     private void sendEmployees(String employeePath) {
         try (CSVReader reader = new CSVReader(new FileReader(employeePath))) {
             String[] line;
-            reader.readNext(); // bỏ tiêu đề
+            reader.readNext(); // Bỏ qua dòng tiêu đề
             log.info("Đang gửi dữ liệu Employees...");
 
             while ((line = reader.readNext()) != null) {
-                // Chỉ điền thông tin Employee (và departmentId)
-                EmployeeDTO dto = EmployeeDTO.builder()
-                        .recordType(TYPE_EMP) // ** Đặt loại **
+                // Tạo proxy cho department để set khóa ngoại
+                STG_Department deptProxy = new STG_Department();
+                deptProxy.setDepartmentId(Integer.parseInt(line[10]));
+
+                // 1. Tạo entity tạm thời
+                STG_Employee tempEmp = STG_Employee.builder()
                         .employeeId(Integer.parseInt(line[0]))
                         .fullName(line[1])
                         .gender(line[2])
-                        .birthDate(LocalDate.parse(line[3]))
-                        .position(line[4])
-                        .departmentId(Integer.parseInt(line[5])) // Khóa ngoại
+                        .dateOfBirth(LocalDate.parse(line[3]))
+                        .hometown(line[4])
+                        .phone(line[5])
+                        .email(line[6])
+                        .educationLevel(line[7])
+                        .position(line[8])
+                        .hireDate(LocalDate.parse(line[9]))
+                        .status(line[11])
+                        .department(deptProxy) // Gán proxy
                         .build();
 
+                // 2. Dùng mapper chuyển thành DTO
+                EmployeeDTO dto = employeeMapper.employeeToDto(tempEmp);
+
+                // 3. Đặt recordType và gửi đi
+                dto.setRecordType(TYPE_EMP);
                 sendToQueue(dto);
             }
             log.info("Hoàn thành gửi dữ liệu Employees.");
         } catch (Exception e) {
-            log.error("Lỗi khi đọc file employees.csv: {}", e.getMessage());
-            e.printStackTrace();
+            log.error("Lỗi khi đọc file employees.csv: {}", e.getMessage(), e);
         }
     }
 
-    /**
-     * Đọc file salaries.csv và gửi DTO loại SALARY
-     */
     private void sendSalaries(String salaryPath) {
         try (CSVReader reader = new CSVReader(new FileReader(salaryPath))) {
             String[] line;
-            reader.readNext(); // bỏ tiêu đề
+            reader.readNext(); // Bỏ qua dòng tiêu đề
             log.info("Đang gửi dữ liệu Salaries...");
 
             while ((line = reader.readNext()) != null) {
-                // Chỉ điền thông tin Salary (và employeeId)
-                EmployeeDTO dto = EmployeeDTO.builder()
-                        .recordType(TYPE_SALARY) // ** Đặt loại **
-                        .employeeId(Integer.parseInt(line[1])) // Khóa ngoại
-                        .baseSalary(new BigDecimal(line[2]))
-                        .bonus(new BigDecimal(line[3]))
-                        .month(Integer.parseInt(line[4]))
-                        .year(Integer.parseInt(line[5]))
+                // Tạo proxy cho employee
+                STG_Employee empProxy = new STG_Employee();
+                empProxy.setEmployeeId(Integer.parseInt(line[1]));
+
+                // 1. Tạo entity tạm thời
+                STG_Salary tempSalary = STG_Salary.builder()
+                        .salaryId(Integer.parseInt(line[0]))
+                        .amountVnd(new BigDecimal(line[2]))
+                        .currency(line[3])
+                        .payFrequency(line[4])
+                        .bonusVnd(new BigDecimal(line[5]))
+                        .effectiveFrom(LocalDate.parse(line[6]))
+                        .effectiveTo(line[7].isEmpty() ? null : LocalDate.parse(line[7]))
+                        .employee(empProxy)
                         .build();
 
+                // 2. Dùng mapper chuyển thành DTO
+                EmployeeDTO dto = employeeMapper.salaryToDto(tempSalary);
+
+                // 3. Đặt recordType và gửi đi
+                dto.setRecordType(TYPE_SALARY);
                 sendToQueue(dto);
             }
             log.info("Hoàn thành gửi dữ liệu Salaries.");
         } catch (Exception e) {
-            log.error("Lỗi khi đọc file salaries.csv: {}", e.getMessage());
-            e.printStackTrace();
+            log.error("Lỗi khi đọc file salaries.csv: {}", e.getMessage(), e);
         }
     }
 
-    /**
-     * Phương thức chung để gửi DTO đến 1 queue duy nhất
-     */
     private void sendToQueue(EmployeeDTO dto) {
         rabbitTemplate.convertAndSend(
                 RabbitMQConfig.EXCHANGE_NAME,

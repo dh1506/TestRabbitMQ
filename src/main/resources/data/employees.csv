@@ -1,4 +1,201 @@
-﻿employee_id,full_name,gender,birth_date,position,department_id
-1,Nguyễn Văn An,Nam,1990-03-12,Nhân viên IT,101
-2,Trần Thị Hoa,Nữ,1995-07-20,Kế toán,102
-3,Lê Minh Tuấn,Nam,1988-11-01,Trưởng phòng,101
+﻿employee_id,full_name,gender,date_of_birth,hometown,phone,email,education_level,position,hire_date,department_id,status
+1,Trần Quốc Ngọc,Nam,1974-10-03,Bình Dương,563379222,tran.quoc.ngoc@example.com,Cử nhân,Chuyên viên phân tích,2022-01-21,6,Đang làm việc
+2,Phạm Minh Dũng,Nữ,1992-08-19,Hồ Chí Minh,928956977,pham.minh.dung@example.com,Tiến sĩ,Trưởng nhóm,2025-04-21,1,Tạm nghỉ
+3,Phạm Hữu Hải,Nam,2000-07-05,Nghệ An,705431069,pham.huu.hai@example.com,Trung cấp,Nhân viên văn phòng,2022-11-15,6,Đã nghỉ việc
+4,Phan Thị Ngọc,Nam,1994-10-21,Hồ Chí Minh,888325895,phan.thi.ngoc@example.com,Cử nhân,Kỹ sư,2025-09-15,6,Đang làm việc
+5,Huỳnh Thị Tâm,Nam,1966-03-13,Bình Dương,568360084,huynh.thi.tam@example.com,Cao đẳng,Thực tập sinh,2021-07-16,5,Đã nghỉ việc
+6,Phạm Xuân Tâm,Nam,1989-12-05,Cần Thơ,329792448,pham.xuan.tam@example.com,Thạc sĩ,Chuyên viên,2023-06-01,8,Đã nghỉ việc
+7,Võ Thị Bình,Nam,1972-03-21,Huế,992343804,vo.thi.binh@example.com,Tiến sĩ,Chuyên viên phân tích,2024-09-25,9,Đã nghỉ việc
+8,Huỳnh Minh Long,Nam,2001-05-20,Hồ Chí Minh,855180875,huynh.minh.long@example.com,Cử nhân,Kỹ sư,2021-11-05,7,Tạm nghỉ
+9,Võ Thị Hải,Nữ,1979-01-27,Hải Phòng,744724847,vo.thi.hai@example.com,Cao đẳng,Quản lý,2024-03-22,4,Đang làm việc
+10,Đỗ Ngọc Phương,Nam,1990-10-25,Bình Dương,583204547,do.ngoc.phuong@example.com,Cử nhân,Chuyên viên phân tích,2025-04-10,2,Tạm nghỉ
+11,Hoàng Thanh Sơn,Nam,1977-02-08,Thanh Hóa,350824240,hoang.thanh.son@example.com,Trung cấp,Nhân viên văn phòng,2021-08-06,10,Đang làm việc
+12,Phạm Quốc Sơn,Nam,1987-04-07,Nghệ An,517650048,pham.quoc.son@example.com,Cử nhân,Chuyên viên,2022-09-16,1,Tạm nghỉ
+13,Hoàng Thị Anh,Nữ,1990-05-18,Bình Dương,728650848,hoang.thi.anh@example.com,Thạc sĩ,Kỹ sư,2025-06-24,4,Tạm nghỉ
+14,Phan Thị Thảo,Nữ,1985-01-23,Hà Nội,709715298,phan.thi.thao@example.com,Cử nhân,Kỹ sư,2025-07-11,8,Đã nghỉ việc
+15,Bùi Thanh Dũng,Nữ,1985-04-19,Nghệ An,974375787,bui.thanh.dung@example.com,Cử nhân,Chuyên viên,2022-06-20,4,Đã nghỉ việc
+16,Bùi Thị Tú,Nam,1972-02-20,Huế,943389598,bui.thi.tu@example.com,Cao đẳng,Chuyên viên,2024-06-07,6,Đã nghỉ việc
+17,Bùi Hữu Nam,Nam,1988-09-18,Bình Dương,744705306,bui.huu.nam@example.com,Trung cấp,Chuyên viên phân tích,2022-10-24,4,Tạm nghỉ
+18,Đỗ Thị Bình,Nữ,2001-08-04,Huế,785175742,do.thi.binh@example.com,Tiến sĩ,Kỹ sư,2022-01-04,7,Tạm nghỉ
+19,Nguyễn Xuân Long,Nam,1968-01-13,Nghệ An,359894402,nguyen.xuan.long@example.com,Trung cấp,Nhân viên văn phòng,2025-07-09,7,Đã nghỉ việc
+20,Phan Văn Phương,Nam,1980-03-10,Đà Nẵng,504613623,phan.van.phuong@example.com,Tiến sĩ,Chuyên viên phân tích,2021-11-27,3,Đang làm việc
+21,Hồ Ngọc Hùng,Nữ,1977-11-15,Hà Nội,287403756,ho.ngoc.hung@example.com,Tiến sĩ,Chuyên viên,2021-04-28,4,Tạm nghỉ
+22,Hoàng Ngọc Thịnh,Nữ,1970-01-30,Đà Nẵng,724163507,hoang.ngoc.thinh@example.com,Tiến sĩ,Trưởng nhóm,2022-04-25,7,Tạm nghỉ
+23,Phan Văn Trang,Nam,1984-01-25,Bình Dương,398169136,phan.van.trang@example.com,Cao đẳng,Nhân viên văn phòng,2025-04-26,1,Tạm nghỉ
+24,Bùi Thị Quang,Nam,1976-04-02,Đồng Nai,770521261,bui.thi.quang@example.com,Thạc sĩ,Thực tập sinh,2021-12-11,8,Đã nghỉ việc
+25,Võ Quốc Lan,Nam,1989-04-22,Hà Nội,556279204,vo.quoc.lan@example.com,Thạc sĩ,Kỹ sư,2025-01-01,6,Tạm nghỉ
+26,Nguyễn Thanh Hùng,Nam,1975-02-07,Đồng Nai,816991204,nguyen.thanh.hung@example.com,Thạc sĩ,Chuyên viên,2024-02-20,9,Tạm nghỉ
+27,Trần Thanh Phong,Nam,1975-02-05,Thanh Hóa,586396866,tran.thanh.phong@example.com,Cao đẳng,Nhân viên văn phòng,2023-11-25,2,Tạm nghỉ
+28,Nguyễn Ngọc Anh,Nam,1996-11-20,Thanh Hóa,730272122,nguyen.ngoc.anh@example.com,Trung cấp,Nhân viên văn phòng,2023-05-13,6,Tạm nghỉ
+29,Hồ Xuân Long,Nam,1991-01-04,Hồ Chí Minh,939094654,ho.xuan.long@example.com,Thạc sĩ,Quản lý,2021-03-20,5,Đang làm việc
+30,Phạm Ngọc Tú,Nữ,1975-10-12,Đà Nẵng,395742341,pham.ngoc.tu@example.com,Cử nhân,Trưởng nhóm,2023-03-15,8,Đang làm việc
+31,Nguyễn Minh Sơn,Nam,1980-08-22,Nghệ An,846110437,nguyen.minh.son@example.com,Trung cấp,Trưởng nhóm,2022-04-27,1,Tạm nghỉ
+32,Nguyễn Ngọc Phương,Nam,1988-03-31,Cần Thơ,346870978,nguyen.ngoc.phuong@example.com,Cử nhân,Thực tập sinh,2024-07-08,4,Tạm nghỉ
+33,Phan Minh Dũng,Nam,1966-06-08,Hà Nội,901543032,phan.minh.dung@example.com,Thạc sĩ,Quản lý,2023-10-16,6,Tạm nghỉ
+34,Võ Minh Lan,Nữ,1986-06-02,Cần Thơ,923430738,vo.minh.lan@example.com,Cao đẳng,Kỹ sư,2024-08-27,8,Đã nghỉ việc
+35,Nguyễn Văn Hòa,Nam,1982-03-02,Đà Nẵng,341975937,nguyen.van.hoa@example.com,Thạc sĩ,Chuyên viên phân tích,2021-05-20,4,Đang làm việc
+36,Trần Văn Long,Nam,1996-11-01,Bình Dương,706551051,tran.van.long@example.com,Thạc sĩ,Chuyên viên phân tích,2024-07-11,1,Tạm nghỉ
+37,Nguyễn Hữu Trang,Nam,1988-09-23,Huế,314927389,nguyen.huu.trang@example.com,Cao đẳng,Kỹ sư,2020-12-03,8,Đang làm việc
+38,Bùi Quốc Phong,Nam,1990-12-26,Hải Phòng,219487965,bui.quoc.phong@example.com,Cử nhân,Chuyên viên phân tích,2023-06-20,8,Đang làm việc
+39,Trần Thị Châu,Nam,1993-12-05,Bình Dương,755051559,tran.thi.chau@example.com,Tiến sĩ,Nhân viên văn phòng,2024-09-08,6,Đang làm việc
+40,Trần Minh Thảo,Nam,1997-01-15,Đà Nẵng,836497038,tran.minh.thao@example.com,Trung cấp,Nhân viên văn phòng,2022-12-24,5,Tạm nghỉ
+41,Phan Văn Nam,Nam,2003-03-29,Hồ Chí Minh,311949694,phan.van.nam@example.com,Tiến sĩ,Kỹ sư,2021-06-10,7,Đang làm việc
+42,Phan Xuân Phương,Nữ,1993-12-27,Nghệ An,306296639,phan.xuan.phuong@example.com,Cao đẳng,Chuyên viên,2024-07-26,8,Đang làm việc
+43,Đặng Hữu Thảo,Nữ,1991-11-16,Cần Thơ,956719917,dang.huu.thao@example.com,Tiến sĩ,Thực tập sinh,2023-09-22,6,Đang làm việc
+44,Bùi Minh Hòa,Nữ,1966-02-13,Đà Nẵng,849656797,bui.minh.hoa@example.com,Trung cấp,Chuyên viên,2022-09-24,10,Đang làm việc
+45,Phan Thị Lan,Nữ,1977-05-12,Nghệ An,336498092,phan.thi.lan@example.com,Trung cấp,Trưởng nhóm,2023-10-14,9,Tạm nghỉ
+46,Trần Xuân Hằng,Nữ,1973-11-15,Thanh Hóa,558745736,tran.xuan.hang@example.com,Thạc sĩ,Chuyên viên phân tích,2023-02-22,4,Đang làm việc
+47,Hoàng Quốc Hằng,Nam,1981-07-18,Hải Phòng,976654824,hoang.quoc.hang@example.com,Trung cấp,Quản lý,2025-05-22,6,Tạm nghỉ
+48,Nguyễn Thanh Long,Nữ,1971-12-04,Hải Phòng,318877946,nguyen.thanh.long@example.com,Cử nhân,Quản lý,2021-06-12,8,Đã nghỉ việc
+49,Võ Văn Tâm,Nam,1979-02-13,Bình Dương,791885510,vo.van.tam@example.com,Trung cấp,Thực tập sinh,2021-06-16,9,Đang làm việc
+50,Phạm Thị Quang,Nữ,1975-03-26,Huế,945743891,pham.thi.quang@example.com,Thạc sĩ,Nhân viên văn phòng,2021-11-18,8,Tạm nghỉ
+51,Phạm Xuân Quang,Nam,2000-10-12,Thanh Hóa,819846047,pham.xuan.quang@example.com,Cao đẳng,Thực tập sinh,2023-02-27,2,Đang làm việc
+52,Huỳnh Thanh Tâm,Nam,2000-07-16,Thanh Hóa,782515320,huynh.thanh.tam@example.com,Cao đẳng,Nhân viên văn phòng,2024-11-05,4,Đã nghỉ việc
+53,Lê Ngọc Hằng,Nam,1980-05-06,Cần Thơ,996769441,le.ngoc.hang@example.com,Cử nhân,Kỹ sư,2021-09-02,3,Đang làm việc
+54,Đặng Minh Ngọc,Nam,1976-11-08,Bình Dương,243904203,dang.minh.ngoc@example.com,Cao đẳng,Kỹ sư,2021-05-09,8,Đã nghỉ việc
+55,Phạm Văn Phương,Nam,1977-07-13,Đồng Nai,727712420,pham.van.phuong@example.com,Trung cấp,Quản lý,2023-08-21,2,Đang làm việc
+56,Lê Xuân Ngọc,Nam,1995-05-22,Cần Thơ,807973110,le.xuan.ngoc@example.com,Trung cấp,Quản lý,2022-04-05,2,Tạm nghỉ
+57,Đỗ Quốc Hòa,Nữ,1988-09-18,Cần Thơ,304133381,do.quoc.hoa@example.com,Thạc sĩ,Chuyên viên,2021-09-01,6,Đã nghỉ việc
+58,Huỳnh Văn Trang,Nam,1971-12-27,Hà Nội,893804275,huynh.van.trang@example.com,Thạc sĩ,Thực tập sinh,2023-06-12,4,Tạm nghỉ
+59,Nguyễn Xuân Lan,Nam,1988-01-24,Huế,220302234,nguyen.xuan.lan@example.com,Thạc sĩ,Nhân viên văn phòng,2025-05-05,3,Tạm nghỉ
+60,Huỳnh Thanh Phương,Nam,1980-12-05,Hải Phòng,718555378,huynh.thanh.phuong@example.com,Tiến sĩ,Quản lý,2022-06-22,3,Tạm nghỉ
+61,Hồ Minh Quang,Nam,1996-05-14,Hải Phòng,944117575,ho.minh.quang@example.com,Tiến sĩ,Trưởng nhóm,2023-09-30,8,Đang làm việc
+62,Đặng Hữu Phong,Nữ,1993-08-26,Nghệ An,839531438,dang.huu.phong@example.com,Cao đẳng,Trưởng nhóm,2023-09-10,2,Tạm nghỉ
+63,Hồ Văn Hải,Nam,1977-05-05,Hà Nội,902366592,ho.van.hai@example.com,Thạc sĩ,Thực tập sinh,2025-08-12,5,Đã nghỉ việc
+64,Đặng Thị Nam,Nữ,1968-01-05,Nghệ An,837166153,dang.thi.nam@example.com,Tiến sĩ,Chuyên viên,2024-09-13,6,Đã nghỉ việc
+65,Lê Thị Thảo,Nam,1978-10-22,Thanh Hóa,562811967,le.thi.thao@example.com,Tiến sĩ,Chuyên viên phân tích,2022-05-19,3,Đang làm việc
+66,Phan Minh Nga,Nữ,1987-10-10,Hải Phòng,890614861,phan.minh.nga@example.com,Trung cấp,Chuyên viên phân tích,2024-12-24,5,Đã nghỉ việc
+67,Hồ Quốc Tâm,Nữ,1995-02-10,Thanh Hóa,799521129,ho.quoc.tam@example.com,Cao đẳng,Kỹ sư,2023-12-12,10,Tạm nghỉ
+68,Lê Thanh Ngọc,Nữ,1994-04-06,Cần Thơ,307709970,le.thanh.ngoc@example.com,Thạc sĩ,Kỹ sư,2025-02-04,4,Đang làm việc
+69,Đặng Thanh Bình,Nữ,1999-08-20,Hải Phòng,925742444,dang.thanh.binh@example.com,Thạc sĩ,Kỹ sư,2024-11-04,6,Tạm nghỉ
+70,Huỳnh Quốc Hải,Nam,1992-02-13,Huế,513647637,huynh.quoc.hai@example.com,Cao đẳng,Thực tập sinh,2023-01-20,8,Đang làm việc
+71,Võ Văn Phương,Nam,1977-12-22,Thanh Hóa,719433935,vo.van.phuong@example.com,Tiến sĩ,Thực tập sinh,2022-11-29,6,Đang làm việc
+72,Trần Ngọc Nga,Nữ,1968-12-27,Nghệ An,992332671,tran.ngoc.nga@example.com,Cử nhân,Nhân viên văn phòng,2023-06-04,10,Đã nghỉ việc
+73,Nguyễn Minh Long,Nam,1966-12-05,Bình Dương,803799534,nguyen.minh.long@example.com,Cao đẳng,Trưởng nhóm,2024-01-11,2,Tạm nghỉ
+74,Nguyễn Thị Dũng,Nam,1994-08-22,Thanh Hóa,892543030,nguyen.thi.dung@example.com,Cao đẳng,Kỹ sư,2023-12-27,5,Tạm nghỉ
+75,Phan Thị Phương,Nam,2001-12-07,Cần Thơ,989818029,phan.thi.phuong@example.com,Cao đẳng,Chuyên viên,2021-08-15,6,Tạm nghỉ
+76,Lê Minh Long,Nữ,1986-02-01,Hồ Chí Minh,343228402,le.minh.long@example.com,Thạc sĩ,Kỹ sư,2022-11-11,3,Đã nghỉ việc
+77,Hồ Hữu Hằng,Nữ,1966-12-27,Nghệ An,552616304,ho.huu.hang@example.com,Cử nhân,Trưởng nhóm,2022-12-02,4,Đang làm việc
+78,Võ Thanh Thảo,Nữ,1982-05-19,Hồ Chí Minh,791084075,vo.thanh.thao@example.com,Thạc sĩ,Chuyên viên,2024-12-04,6,Đang làm việc
+79,Võ Thanh Thịnh,Nam,1982-07-20,Đà Nẵng,393064525,vo.thanh.thinh@example.com,Tiến sĩ,Kỹ sư,2021-08-20,9,Đã nghỉ việc
+80,Võ Minh Sơn,Nữ,1987-04-09,Thanh Hóa,223761220,vo.minh.son@example.com,Tiến sĩ,Chuyên viên phân tích,2021-01-09,5,Đang làm việc
+81,Hồ Thị Phương,Nữ,1985-03-23,Đồng Nai,972915749,ho.thi.phuong@example.com,Trung cấp,Chuyên viên phân tích,2022-03-22,7,Đã nghỉ việc
+82,Phạm Quốc Trang,Nữ,1975-11-03,Thanh Hóa,786015449,pham.quoc.trang@example.com,Trung cấp,Chuyên viên phân tích,2021-08-14,2,Tạm nghỉ
+83,Nguyễn Ngọc Hùng,Nữ,1980-10-09,Hồ Chí Minh,362240801,nguyen.ngoc.hung@example.com,Cử nhân,Kỹ sư,2021-11-20,5,Đang làm việc
+84,Đỗ Thanh Thịnh,Nữ,1979-09-30,Đà Nẵng,528485342,do.thanh.thinh@example.com,Cử nhân,Quản lý,2022-03-14,8,Tạm nghỉ
+85,Đặng Ngọc Dũng,Nữ,1995-06-27,Đồng Nai,237454174,dang.ngoc.dung@example.com,Tiến sĩ,Chuyên viên phân tích,2023-08-04,1,Đang làm việc
+86,Trần Minh Hà,Nam,2002-09-13,Huế,832326624,tran.minh.ha@example.com,Trung cấp,Chuyên viên,2025-03-06,3,Đang làm việc
+87,Nguyễn Thanh Trang,Nữ,1969-03-10,Hải Phòng,853312748,nguyen.thanh.trang@example.com,Tiến sĩ,Thực tập sinh,2023-11-02,8,Đang làm việc
+88,Đỗ Văn Trang,Nam,1974-02-07,Hải Phòng,271166143,do.van.trang@example.com,Cao đẳng,Trưởng nhóm,2023-06-25,2,Đang làm việc
+89,Trần Thị Thảo,Nữ,1967-08-11,Đồng Nai,320584593,tran.thi.thao@example.com,Trung cấp,Chuyên viên,2021-11-18,8,Tạm nghỉ
+90,Trần Minh Lan,Nam,1999-05-26,Hà Nội,533001372,tran.minh.lan@example.com,Thạc sĩ,Thực tập sinh,2023-02-22,2,Đang làm việc
+91,Đỗ Văn Ngọc,Nam,1980-09-26,Hải Phòng,273439291,do.van.ngoc@example.com,Tiến sĩ,Chuyên viên,2023-09-05,2,Đang làm việc
+92,Phan Xuân Ngọc,Nam,1977-11-05,Huế,780105044,phan.xuan.ngoc@example.com,Trung cấp,Chuyên viên,2025-02-03,5,Tạm nghỉ
+93,Lê Quốc Trang,Nam,2003-10-18,Nghệ An,571358795,le.quoc.trang@example.com,Cao đẳng,Thực tập sinh,2024-07-17,4,Đang làm việc
+94,Võ Thanh Hùng,Nữ,1995-07-03,Hồ Chí Minh,530120675,vo.thanh.hung@example.com,Cử nhân,Trưởng nhóm,2024-01-24,2,Đang làm việc
+95,Võ Thị Thảo,Nam,1972-04-14,Hải Phòng,876369746,vo.thi.thao@example.com,Thạc sĩ,Thực tập sinh,2021-02-06,9,Đang làm việc
+96,Phan Thanh Sơn,Nữ,1981-12-14,Đà Nẵng,740356443,phan.thanh.son@example.com,Trung cấp,Chuyên viên,2021-06-08,1,Đang làm việc
+97,Huỳnh Thanh Thảo,Nữ,1985-12-14,Bình Dương,913278723,huynh.thanh.thao@example.com,Thạc sĩ,Chuyên viên,2021-07-01,3,Đã nghỉ việc
+98,Nguyễn Văn Hùng,Nam,2000-06-18,Hà Nội,323116549,nguyen.van.hung@example.com,Thạc sĩ,Nhân viên văn phòng,2022-10-09,8,Tạm nghỉ
+99,Huỳnh Quốc Quang,Nam,1990-03-02,Nghệ An,831241459,huynh.quoc.quang@example.com,Cao đẳng,Kỹ sư,2022-10-20,3,Tạm nghỉ
+100,Đỗ Minh Lan,Nữ,1989-07-01,Đà Nẵng,991632333,do.minh.lan@example.com,Tiến sĩ,Kỹ sư,2021-01-15,9,Đã nghỉ việc
+101,Huỳnh Xuân Tâm,Nam,1981-02-23,Bình Dương,876560300,huynh.xuan.tam@example.com,Trung cấp,Kỹ sư,2025-07-17,4,Đang làm việc
+102,Phạm Ngọc Phương,Nam,1974-07-27,Hải Phòng,302734193,pham.ngoc.phuong@example.com,Cao đẳng,Quản lý,2021-08-09,9,Tạm nghỉ
+103,Phạm Minh Quang,Nữ,1989-06-22,Đồng Nai,894726278,pham.minh.quang@example.com,Cử nhân,Quản lý,2021-07-06,4,Đang làm việc
+104,Đỗ Thanh Thảo,Nữ,1968-02-23,Thanh Hóa,893827386,do.thanh.thao@example.com,Trung cấp,Thực tập sinh,2024-04-23,8,Đã nghỉ việc
+105,Đặng Xuân Châu,Nam,1985-06-01,Bình Dương,592694138,dang.xuan.chau@example.com,Trung cấp,Trưởng nhóm,2021-11-15,7,Tạm nghỉ
+106,Đỗ Quốc Thịnh,Nữ,1981-04-26,Huế,539951287,do.quoc.thinh@example.com,Cử nhân,Quản lý,2021-12-19,8,Đã nghỉ việc
+107,Hoàng Văn Thảo,Nam,1974-05-11,Đà Nẵng,899920046,hoang.van.thao@example.com,Cao đẳng,Kỹ sư,2022-03-17,8,Đã nghỉ việc
+108,Nguyễn Thị Sơn,Nam,1996-02-05,Thanh Hóa,866504092,nguyen.thi.son@example.com,Cử nhân,Quản lý,2023-06-10,10,Đã nghỉ việc
+109,Đặng Thị Hải,Nữ,1974-10-30,Đà Nẵng,861022787,dang.thi.hai@example.com,Cao đẳng,Nhân viên văn phòng,2025-03-10,2,Đã nghỉ việc
+110,Lê Thị Hòa,Nữ,1998-06-16,Nghệ An,740689386,le.thi.hoa@example.com,Thạc sĩ,Thực tập sinh,2024-06-16,1,Tạm nghỉ
+111,Đặng Hữu Phương,Nữ,2000-03-16,Hồ Chí Minh,887771817,dang.huu.phuong@example.com,Cao đẳng,Chuyên viên phân tích,2025-02-01,5,Đã nghỉ việc
+112,Hoàng Hữu Dũng,Nữ,1968-08-17,Nghệ An,839844886,hoang.huu.dung@example.com,Thạc sĩ,Nhân viên văn phòng,2024-10-24,5,Tạm nghỉ
+113,Trần Xuân Linh,Nam,1983-03-05,Hà Nội,265792747,tran.xuan.linh@example.com,Thạc sĩ,Nhân viên văn phòng,2023-01-18,1,Đã nghỉ việc
+114,Phạm Hữu Ngọc,Nam,1993-01-11,Huế,735787259,pham.huu.ngoc@example.com,Trung cấp,Thực tập sinh,2023-06-27,1,Đang làm việc
+115,Phạm Thị Nga,Nữ,1980-02-01,Nghệ An,926672952,pham.thi.nga@example.com,Cử nhân,Trưởng nhóm,2023-09-03,4,Đã nghỉ việc
+116,Nguyễn Thị Hòa,Nam,1998-09-03,Hà Nội,731894771,nguyen.thi.hoa@example.com,Cử nhân,Quản lý,2024-09-27,4,Đang làm việc
+117,Lê Ngọc Quang,Nữ,2001-02-10,Đồng Nai,259018169,le.ngoc.quang@example.com,Trung cấp,Quản lý,2022-07-18,5,Tạm nghỉ
+118,Phạm Ngọc Hà,Nam,1998-01-23,Đà Nẵng,715420943,pham.ngoc.ha@example.com,Trung cấp,Quản lý,2022-07-07,7,Đã nghỉ việc
+119,Đỗ Thanh Dũng,Nữ,1973-07-08,Nghệ An,304670089,do.thanh.dung@example.com,Thạc sĩ,Nhân viên văn phòng,2023-03-22,8,Tạm nghỉ
+120,Bùi Thị Châu,Nam,2003-04-10,Hồ Chí Minh,535736245,bui.thi.chau@example.com,Trung cấp,Trưởng nhóm,2022-11-13,10,Đang làm việc
+121,Hồ Quốc Ngọc,Nữ,1969-09-11,Đồng Nai,736923773,ho.quoc.ngoc@example.com,Thạc sĩ,Nhân viên văn phòng,2022-08-20,2,Tạm nghỉ
+122,Hồ Ngọc Hà,Nam,1987-05-17,Hồ Chí Minh,355256941,ho.ngoc.ha@example.com,Tiến sĩ,Kỹ sư,2021-12-06,2,Đang làm việc
+123,Võ Xuân Phong,Nữ,1998-11-20,Đà Nẵng,323371119,vo.xuan.phong@example.com,Tiến sĩ,Kỹ sư,2022-10-07,9,Đang làm việc
+124,Lê Thị Tú,Nam,1968-09-22,Đà Nẵng,815293237,le.thi.tu@example.com,Tiến sĩ,Chuyên viên phân tích,2022-05-06,5,Đã nghỉ việc
+125,Huỳnh Thanh Phương,Nữ,1976-09-24,Cần Thơ,972675471,huynh.thanh.phuong@example.com,Cao đẳng,Chuyên viên,2021-03-30,6,Đang làm việc
+126,Phan Hữu Hằng,Nữ,1997-04-22,Hà Nội,821973753,phan.huu.hang@example.com,Tiến sĩ,Chuyên viên phân tích,2021-01-28,4,Đang làm việc
+127,Hoàng Thanh Trang,Nam,1995-08-25,Đà Nẵng,307353599,hoang.thanh.trang@example.com,Cử nhân,Quản lý,2020-11-22,2,Đã nghỉ việc
+128,Võ Thanh Phương,Nam,1970-09-17,Hà Nội,715747485,vo.thanh.phuong@example.com,Cử nhân,Chuyên viên phân tích,2025-01-30,8,Đang làm việc
+129,Đặng Thanh Phương,Nam,1975-03-31,Bình Dương,916609971,dang.thanh.phuong@example.com,Trung cấp,Thực tập sinh,2020-12-21,5,Đang làm việc
+130,Nguyễn Thanh Anh,Nữ,1999-04-18,Nghệ An,789204999,nguyen.thanh.anh@example.com,Cử nhân,Thực tập sinh,2023-10-13,5,Tạm nghỉ
+131,Võ Thị Tú,Nam,1971-10-20,Cần Thơ,885459435,vo.thi.tu@example.com,Cao đẳng,Chuyên viên,2024-06-21,7,Đã nghỉ việc
+132,Lê Văn Nam,Nam,1998-10-16,Thanh Hóa,869643924,le.van.nam@example.com,Thạc sĩ,Nhân viên văn phòng,2023-06-02,9,Đã nghỉ việc
+133,Hoàng Hữu Trang,Nam,1976-08-20,Bình Dương,768622113,hoang.huu.trang@example.com,Thạc sĩ,Chuyên viên phân tích,2023-03-03,5,Đang làm việc
+134,Hồ Thanh Trang,Nữ,1995-05-20,Nghệ An,307609899,ho.thanh.trang@example.com,Tiến sĩ,Chuyên viên phân tích,2025-01-15,1,Đang làm việc
+135,Hồ Văn Tâm,Nam,1969-11-30,Hải Phòng,256102966,ho.van.tam@example.com,Thạc sĩ,Chuyên viên,2024-12-05,10,Đang làm việc
+136,Võ Thanh Hà,Nữ,1998-09-24,Huế,205322984,vo.thanh.ha@example.com,Thạc sĩ,Kỹ sư,2021-06-04,8,Đang làm việc
+137,Phan Văn Thịnh,Nam,1993-07-24,Bình Dương,862023350,phan.van.thinh@example.com,Trung cấp,Quản lý,2023-07-21,8,Tạm nghỉ
+138,Lê Thị Sơn,Nam,1973-12-17,Thanh Hóa,390459030,le.thi.son@example.com,Tiến sĩ,Chuyên viên phân tích,2024-07-21,6,Tạm nghỉ
+139,Trần Hữu Hùng,Nữ,1975-05-18,Hải Phòng,328818314,tran.huu.hung@example.com,Cao đẳng,Trưởng nhóm,2024-05-10,2,Tạm nghỉ
+140,Nguyễn Thanh Hùng,Nữ,1972-02-14,Cần Thơ,344822780,nguyen.thanh.hung@example.com,Thạc sĩ,Trưởng nhóm,2022-10-10,4,Tạm nghỉ
+141,Trần Quốc Hòa,Nữ,2000-06-29,Hồ Chí Minh,898428970,tran.quoc.hoa@example.com,Thạc sĩ,Chuyên viên,2025-01-15,3,Tạm nghỉ
+142,Nguyễn Thị Phong,Nam,1991-01-06,Bình Dương,750512903,nguyen.thi.phong@example.com,Cử nhân,Chuyên viên phân tích,2020-12-13,10,Đã nghỉ việc
+143,Lê Hữu Phong,Nữ,1970-05-05,Huế,755316961,le.huu.phong@example.com,Tiến sĩ,Chuyên viên,2025-01-03,1,Tạm nghỉ
+144,Bùi Hữu Hùng,Nữ,1993-12-15,Hồ Chí Minh,779538159,bui.huu.hung@example.com,Tiến sĩ,Kỹ sư,2021-11-28,2,Đã nghỉ việc
+145,Võ Thị Anh,Nam,1991-11-16,Đồng Nai,257925759,vo.thi.anh@example.com,Cao đẳng,Nhân viên văn phòng,2022-08-09,10,Tạm nghỉ
+146,Đặng Thị Nga,Nữ,1969-04-18,Đà Nẵng,203289671,dang.thi.nga@example.com,Cử nhân,Chuyên viên phân tích,2024-07-25,3,Đã nghỉ việc
+147,Phạm Thị Anh,Nữ,1995-10-06,Huế,236704899,pham.thi.anh@example.com,Cao đẳng,Quản lý,2021-11-21,9,Đã nghỉ việc
+148,Trần Thanh Long,Nam,1975-08-25,Thanh Hóa,531406656,tran.thanh.long@example.com,Cao đẳng,Chuyên viên,2023-09-04,10,Đang làm việc
+149,Nguyễn Ngọc Hằng,Nam,1988-12-25,Nghệ An,908002478,nguyen.ngoc.hang@example.com,Tiến sĩ,Chuyên viên,2022-01-20,5,Tạm nghỉ
+150,Lê Quốc Nam,Nam,1967-02-06,Bình Dương,956988435,le.quoc.nam@example.com,Thạc sĩ,Thực tập sinh,2022-04-14,2,Đang làm việc
+151,Nguyễn Thị Bình,Nam,1968-01-14,Huế,801607669,nguyen.thi.binh@example.com,Tiến sĩ,Quản lý,2021-08-05,4,Tạm nghỉ
+152,Phan Thị Phương,Nam,1990-06-03,Thanh Hóa,367942898,phan.thi.phuong@example.com,Thạc sĩ,Quản lý,2021-06-01,3,Tạm nghỉ
+153,Đặng Quốc Hùng,Nam,1993-02-20,Huế,398975748,dang.quoc.hung@example.com,Cử nhân,Thực tập sinh,2023-12-05,1,Đã nghỉ việc
+154,Nguyễn Quốc Phương,Nữ,1968-03-26,Đà Nẵng,962095042,nguyen.quoc.phuong@example.com,Thạc sĩ,Chuyên viên,2021-01-08,6,Đang làm việc
+155,Đặng Thị Hòa,Nữ,1984-02-10,Hồ Chí Minh,811256647,dang.thi.hoa@example.com,Cao đẳng,Trưởng nhóm,2023-11-22,7,Đang làm việc
+156,Hồ Thanh Nga,Nam,1996-11-07,Bình Dương,333261363,ho.thanh.nga@example.com,Cao đẳng,Chuyên viên,2024-08-28,1,Tạm nghỉ
+157,Hoàng Xuân Dũng,Nữ,1998-05-25,Cần Thơ,705899275,hoang.xuan.dung@example.com,Thạc sĩ,Chuyên viên phân tích,2022-10-30,6,Đang làm việc
+158,Phạm Minh Hằng,Nam,1978-12-03,Đồng Nai,925414394,pham.minh.hang@example.com,Trung cấp,Chuyên viên phân tích,2021-08-06,4,Đã nghỉ việc
+159,Trần Ngọc Linh,Nữ,1992-09-05,Hồ Chí Minh,828164063,tran.ngoc.linh@example.com,Tiến sĩ,Chuyên viên phân tích,2022-08-14,3,Đang làm việc
+160,Đặng Ngọc Ngọc,Nữ,1978-08-14,Hồ Chí Minh,933540842,dang.ngoc.ngoc@example.com,Trung cấp,Nhân viên văn phòng,2021-09-04,10,Đã nghỉ việc
+161,Hồ Thị Hải,Nam,1999-04-28,Hà Nội,539342286,ho.thi.hai@example.com,Trung cấp,Nhân viên văn phòng,2023-09-11,5,Đang làm việc
+162,Phạm Minh Thảo,Nam,1969-09-23,Hải Phòng,995598166,pham.minh.thao@example.com,Cử nhân,Chuyên viên,2023-04-22,10,Đang làm việc
+163,Hồ Quốc Hùng,Nữ,1993-04-26,Đồng Nai,511526983,ho.quoc.hung@example.com,Trung cấp,Kỹ sư,2022-02-14,8,Đã nghỉ việc
+164,Nguyễn Thanh Sơn,Nữ,1989-01-24,Nghệ An,809901944,nguyen.thanh.son@example.com,Cử nhân,Quản lý,2021-11-11,7,Đã nghỉ việc
+165,Phạm Thanh Tâm,Nữ,1999-12-29,Hải Phòng,710735983,pham.thanh.tam@example.com,Tiến sĩ,Kỹ sư,2024-04-24,10,Tạm nghỉ
+166,Hoàng Quốc Thảo,Nữ,1995-05-21,Đồng Nai,532870794,hoang.quoc.thao@example.com,Tiến sĩ,Chuyên viên phân tích,2022-03-05,5,Tạm nghỉ
+167,Đỗ Thị Hòa,Nam,1986-07-29,Bình Dương,999537138,do.thi.hoa@example.com,Cao đẳng,Kỹ sư,2022-09-04,7,Tạm nghỉ
+168,Phạm Ngọc Hùng,Nữ,1982-08-25,Huế,255833145,pham.ngoc.hung@example.com,Cao đẳng,Thực tập sinh,2025-05-28,1,Tạm nghỉ
+169,Phan Quốc Phong,Nam,1986-08-16,Đà Nẵng,724991554,phan.quoc.phong@example.com,Cử nhân,Chuyên viên,2024-12-17,8,Đã nghỉ việc
+170,Bùi Hữu Hải,Nam,1999-04-29,Bình Dương,234461125,bui.huu.hai@example.com,Tiến sĩ,Chuyên viên phân tích,2023-12-27,6,Tạm nghỉ
+171,Hồ Thị Phương,Nữ,1993-09-30,Thanh Hóa,200608970,ho.thi.phuong@example.com,Trung cấp,Chuyên viên phân tích,2022-10-19,7,Đã nghỉ việc
+172,Võ Xuân Hòa,Nữ,1989-11-28,Hà Nội,771971976,vo.xuan.hoa@example.com,Cử nhân,Nhân viên văn phòng,2021-10-03,6,Đang làm việc
+173,Đỗ Xuân Bình,Nữ,1986-03-02,Bình Dương,513582505,do.xuan.binh@example.com,Cao đẳng,Chuyên viên phân tích,2023-03-01,4,Đang làm việc
+174,Huỳnh Thị Châu,Nam,1994-10-25,Hải Phòng,992437637,huynh.thi.chau@example.com,Cử nhân,Trưởng nhóm,2021-05-01,6,Tạm nghỉ
+175,Phan Ngọc Anh,Nam,2001-05-28,Đà Nẵng,315170314,phan.ngoc.anh@example.com,Cử nhân,Quản lý,2022-10-11,4,Tạm nghỉ
+176,Bùi Minh Anh,Nam,1986-11-24,Nghệ An,303486942,bui.minh.anh@example.com,Thạc sĩ,Chuyên viên phân tích,2021-10-19,2,Tạm nghỉ
+177,Phạm Văn Dũng,Nam,1979-03-13,Đồng Nai,927292376,pham.van.dung@example.com,Cao đẳng,Trưởng nhóm,2024-12-03,7,Đang làm việc
+178,Nguyễn Thị Thảo,Nam,1978-02-26,Huế,896255182,nguyen.thi.thao@example.com,Cao đẳng,Chuyên viên,2021-04-12,4,Đang làm việc
+179,Lê Minh Thảo,Nam,1970-06-17,Nghệ An,288095740,le.minh.thao@example.com,Tiến sĩ,Kỹ sư,2021-11-14,5,Đang làm việc
+180,Lê Quốc Phong,Nữ,1985-12-12,Đồng Nai,374376435,le.quoc.phong@example.com,Cử nhân,Kỹ sư,2024-07-10,5,Tạm nghỉ
+181,Hoàng Xuân Quang,Nam,2001-03-12,Hồ Chí Minh,218393095,hoang.xuan.quang@example.com,Thạc sĩ,Chuyên viên,2021-10-09,1,Đang làm việc
+182,Phan Xuân Hải,Nam,1972-03-04,Thanh Hóa,258171739,phan.xuan.hai@example.com,Trung cấp,Nhân viên văn phòng,2024-05-15,3,Đã nghỉ việc
+183,Đặng Thanh Phương,Nam,1999-05-17,Hải Phòng,363900648,dang.thanh.phuong@example.com,Thạc sĩ,Trưởng nhóm,2025-03-11,8,Đã nghỉ việc
+184,Hoàng Xuân Phong,Nam,1981-07-02,Hải Phòng,383858511,hoang.xuan.phong@example.com,Tiến sĩ,Trưởng nhóm,2024-08-18,3,Đã nghỉ việc
+185,Hoàng Minh Anh,Nam,1999-08-18,Huế,855373345,hoang.minh.anh@example.com,Cử nhân,Thực tập sinh,2025-07-06,10,Tạm nghỉ
+186,Bùi Hữu Linh,Nam,1985-05-30,Huế,717628867,bui.huu.linh@example.com,Cử nhân,Thực tập sinh,2022-02-19,9,Đã nghỉ việc
+187,Đặng Xuân Hằng,Nữ,1966-05-18,Hồ Chí Minh,719342993,dang.xuan.hang@example.com,Cử nhân,Chuyên viên phân tích,2020-11-28,9,Tạm nghỉ
+188,Đặng Minh Quang,Nam,1991-12-04,Hà Nội,373118103,dang.minh.quang@example.com,Trung cấp,Chuyên viên phân tích,2021-09-28,7,Tạm nghỉ
+189,Lê Ngọc Thảo,Nam,1973-04-29,Hồ Chí Minh,271341797,le.ngoc.thao@example.com,Tiến sĩ,Chuyên viên phân tích,2021-07-31,5,Đã nghỉ việc
+190,Lê Văn Hà,Nam,1974-03-22,Bình Dương,775567497,le.van.ha@example.com,Trung cấp,Thực tập sinh,2021-11-11,7,Đang làm việc
+191,Phan Hữu Hà,Nữ,1971-03-23,Nghệ An,951563218,phan.huu.ha@example.com,Trung cấp,Quản lý,2025-09-05,9,Tạm nghỉ
+192,Hồ Thị Hùng,Nữ,1981-12-25,Huế,252408612,ho.thi.hung@example.com,Cử nhân,Chuyên viên phân tích,2022-12-10,4,Đang làm việc
+193,Nguyễn Thị Hà,Nam,1987-08-03,Nghệ An,296480526,nguyen.thi.ha@example.com,Cao đẳng,Quản lý,2025-02-16,7,Tạm nghỉ
+194,Trần Minh Hà,Nữ,1981-01-28,Huế,862368185,tran.minh.ha@example.com,Thạc sĩ,Kỹ sư,2025-03-08,8,Tạm nghỉ
+195,Đỗ Xuân Bình,Nữ,1980-01-11,Đồng Nai,383837838,do.xuan.binh@example.com,Trung cấp,Nhân viên văn phòng,2023-04-13,10,Đã nghỉ việc
+196,Võ Hữu Châu,Nam,1966-07-06,Hồ Chí Minh,763669124,vo.huu.chau@example.com,Cao đẳng,Chuyên viên,2024-03-14,7,Đã nghỉ việc
+197,Trần Văn Bình,Nam,1981-06-20,Bình Dương,317085367,tran.van.binh@example.com,Trung cấp,Chuyên viên,2021-10-22,8,Tạm nghỉ
+198,Nguyễn Quốc Châu,Nữ,1967-03-25,Đà Nẵng,232326946,nguyen.quoc.chau@example.com,Cử nhân,Nhân viên văn phòng,2024-01-26,7,Đang làm việc
+199,Huỳnh Ngọc Châu,Nữ,1996-07-05,Đồng Nai,259294256,huynh.ngoc.chau@example.com,Cao đẳng,Chuyên viên phân tích,2024-08-11,3,Đang làm việc
+200,Huỳnh Ngọc Tú,Nam,2002-09-13,Bình Dương,979030512,huynh.ngoc.tu@example.com,Cử nhân,Chuyên viên,2022-08-11,2,Đã nghỉ việc
