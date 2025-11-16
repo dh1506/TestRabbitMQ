@@ -8,10 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface PerformanceMapper {
 
-    // ===================================
     // MAPPINGS: ENTITY -> DTO (For Producer)
-    // ===================================
-
     @Mapping(source = "description", target = "reviewDescription")
     @Mapping(target = "averageScore", ignore = true)
     @Mapping(target = "category", ignore = true)
@@ -123,10 +120,7 @@ public interface PerformanceMapper {
     @Mapping(target = "taskScore", ignore = true)
     PerformanceDTO kpiMetricsToDto(STG_KpiMetrics entity);
 
-    // ===================================
     // MAPPINGS: DTO -> ENTITY (For Consumer)
-    // ===================================
-
     @Mapping(source = "reviewDescription", target = "description")
     STG_PerformanceReview dtoToReview(PerformanceDTO dto);
 

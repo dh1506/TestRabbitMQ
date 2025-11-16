@@ -23,7 +23,7 @@ import java.time.LocalDate;
 public class CSVProducerServiceImpl implements CSVProducerService {
 
     private final RabbitTemplate rabbitTemplate;
-    private final EmployeeMapper employeeMapper; // Tiêm mapper vào
+    private final EmployeeMapper employeeMapper;
 
     // Định nghĩa các hằng số cho recordType
     private static final String TYPE_DEPT = "DEPARTMENT";
@@ -46,9 +46,7 @@ public class CSVProducerServiceImpl implements CSVProducerService {
             String[] line;
             reader.readNext(); // Bỏ qua dòng tiêu đề
             log.info("Đang gửi dữ liệu Departments...");
-
             while ((line = reader.readNext()) != null) {
-                // 1. Tạo entity tạm thời từ dữ liệu CSV
                 STG_Department tempDept = STG_Department.builder()
                         .departmentId(Integer.parseInt(line[0]))
                         .name(line[1])
@@ -58,10 +56,8 @@ public class CSVProducerServiceImpl implements CSVProducerService {
                         .managerId(Integer.parseInt(line[5]))
                         .build();
 
-                // 2. Dùng mapper để chuyển entity thành DTO
                 EmployeeDTO dto = employeeMapper.departmentToDto(tempDept);
 
-                // 3. Đặt recordType và gửi đi
                 dto.setRecordType(TYPE_DEPT);
                 sendToQueue(dto);
             }
@@ -78,11 +74,8 @@ public class CSVProducerServiceImpl implements CSVProducerService {
             log.info("Đang gửi dữ liệu Employees...");
 
             while ((line = reader.readNext()) != null) {
-                // Tạo proxy cho department để set khóa ngoại
                 STG_Department deptProxy = new STG_Department();
                 deptProxy.setDepartmentId(Integer.parseInt(line[10]));
-
-                // 1. Tạo entity tạm thời
                 STG_Employee tempEmp = STG_Employee.builder()
                         .employeeId(Integer.parseInt(line[0]))
                         .fullName(line[1])
@@ -97,11 +90,7 @@ public class CSVProducerServiceImpl implements CSVProducerService {
                         .status(line[11])
                         .department(deptProxy) // Gán proxy
                         .build();
-
-                // 2. Dùng mapper chuyển thành DTO
                 EmployeeDTO dto = employeeMapper.employeeToDto(tempEmp);
-
-                // 3. Đặt recordType và gửi đi
                 dto.setRecordType(TYPE_EMP);
                 sendToQueue(dto);
             }
@@ -118,11 +107,8 @@ public class CSVProducerServiceImpl implements CSVProducerService {
             log.info("Đang gửi dữ liệu Salaries...");
 
             while ((line = reader.readNext()) != null) {
-                // Tạo proxy cho employee
                 STG_Employee empProxy = new STG_Employee();
                 empProxy.setEmployeeId(Integer.parseInt(line[1]));
-
-                // 1. Tạo entity tạm thời
                 STG_Salary tempSalary = STG_Salary.builder()
                         .salaryId(Integer.parseInt(line[0]))
                         .amountVnd(new BigDecimal(line[2]))
@@ -133,11 +119,7 @@ public class CSVProducerServiceImpl implements CSVProducerService {
                         .effectiveTo(line[7].isEmpty() ? null : LocalDate.parse(line[7]))
                         .employee(empProxy)
                         .build();
-
-                // 2. Dùng mapper chuyển thành DTO
                 EmployeeDTO dto = employeeMapper.salaryToDto(tempSalary);
-
-                // 3. Đặt recordType và gửi đi
                 dto.setRecordType(TYPE_SALARY);
                 sendToQueue(dto);
             }

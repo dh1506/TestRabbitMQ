@@ -1,6 +1,6 @@
 ﻿employee_id,full_name,gender,date_of_birth,hometown,phone,email,education_level,position,hire_date,department_id,status
-1,Trần Quốc Ngọc,Nam,1974-10-03,Bình Dương,563379222,tran.quoc.ngoc@example.com,Cử nhân,Chuyên viên phân tích,2022-01-21,6,Đang làm việc
-2,Phạm Minh Dũng,Nữ,1992-08-19,Hồ Chí Minh,928956977,pham.minh.dung@example.com,Tiến sĩ,Trưởng nhóm,2025-04-21,1,Tạm nghỉ
+1,,Nam,1974-10-03,Bình Dương,563379222,tran.quoc.ngoc@example.com,Cử nhân,Chuyên viên phân tích,2022-01-21,6,Đang làm việc
+2,ng,Nữ,1992-08-19,Hồ Chí Minh,928956977,pham.minh.dung@example.com,Tiến sĩ,Trưởng nhóm,2025-04-21,1,Tạm nghỉ
 3,Phạm Hữu Hải,Nam,2000-07-05,Nghệ An,705431069,pham.huu.hai@example.com,Trung cấp,Nhân viên văn phòng,2022-11-15,6,Đã nghỉ việc
 4,Phan Thị Ngọc,Nam,1994-10-21,Hồ Chí Minh,888325895,phan.thi.ngoc@example.com,Cử nhân,Kỹ sư,2025-09-15,6,Đang làm việc
 5,Huỳnh Thị Tâm,Nam,1966-03-13,Bình Dương,568360084,huynh.thi.tam@example.com,Cao đẳng,Thực tập sinh,2021-07-16,5,Đã nghỉ việc

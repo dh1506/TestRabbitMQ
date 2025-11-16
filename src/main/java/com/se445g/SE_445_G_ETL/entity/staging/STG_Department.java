@@ -13,10 +13,9 @@ import org.springframework.data.domain.Persistable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class STG_Department implements Persistable<Integer> { // <--- IMPLEMENTS Persistable
+public class STG_Department implements Persistable<Integer> {
 
     @Id
-    // KHÔNG CÓ @GeneratedValue
     private Integer departmentId;
 
     private String name;
@@ -27,8 +26,6 @@ public class STG_Department implements Persistable<Integer> { // <--- IMPLEMENTS
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<STG_Employee> employees;
-
-    // === THÊM TRƯỜNG VÀ PHƯƠNG THỨC SAU ===
 
     @Transient // Đánh dấu để JPA không lưu trường này vào DB
     @Builder.Default
@@ -41,7 +38,7 @@ public class STG_Department implements Persistable<Integer> { // <--- IMPLEMENTS
 
     @Override
     public boolean isNew() {
-        // Luôn trả về true vì trong luồng ETL này, chúng ta chỉ INSERT
+        // Luôn trả về true vì luồng này chỉ insert
         return this.isNew;
     }
 

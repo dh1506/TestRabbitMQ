@@ -11,10 +11,7 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface EmployeeMapper {
 
-        // =================================================================
         // MAPPING TỪ ENTITY -> DTO (Sử dụng trong Producer)
-        // =================================================================
-
         @Mappings({
                         @Mapping(source = "name", target = "departmentName"),
                         @Mapping(source = "location", target = "departmentLocation"),
@@ -82,16 +79,13 @@ public interface EmployeeMapper {
         })
         EmployeeDTO salaryToDto(STG_Salary salary);
 
-        // =================================================================
         // MAPPING TỪ DTO -> ENTITY (Sử dụng trong Consumer)
-        // =================================================================
-
         @Mappings({
                         @Mapping(source = "departmentName", target = "name"),
                         @Mapping(source = "departmentLocation", target = "location"),
                         @Mapping(source = "departmentPhone", target = "phone"),
                         @Mapping(source = "departmentBudgetVnd", target = "budgetVnd"),
-                        @Mapping(target = "employees", ignore = true), // Bỏ qua list để tránh lỗi mapping
+                        @Mapping(target = "employees", ignore = true),
                         @Mapping(target = "isNew", constant = "false")
         })
         STG_Department dtoToDepartment(EmployeeDTO dto);
@@ -100,7 +94,7 @@ public interface EmployeeMapper {
                         @Mapping(source = "employeeStatus", target = "status"),
                         @Mapping(source = "departmentId", target = "department.departmentId"), // Map ID vào object
                                                                                                // department
-                        @Mapping(target = "salaries", ignore = true), // Bỏ qua list để tránh lỗi mapping
+                        @Mapping(target = "salaries", ignore = true),
                         @Mapping(target = "isNew", constant = "false")
         })
         STG_Employee dtoToEmployee(EmployeeDTO dto);

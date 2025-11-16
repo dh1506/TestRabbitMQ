@@ -18,9 +18,7 @@ public class EmployeeDTO {
     // Sẽ là "DEPARTMENT", "EMPLOYEE", hoặc "SALARY"
     private String recordType;
 
-    // =====================
     // Thông tin nhân viên
-    // =====================
     private Integer employeeId;
     private String fullName;
     private String gender;
@@ -33,9 +31,7 @@ public class EmployeeDTO {
     private LocalDate hireDate;
     private String employeeStatus;
 
-    // =====================
     // Thông tin phòng ban
-    // =====================
     private Integer departmentId;
     private String departmentName;
     private String departmentLocation;
@@ -43,9 +39,7 @@ public class EmployeeDTO {
     private BigDecimal departmentBudgetVnd;
     private Integer managerId;
 
-    // =====================
     // Thông tin lương
-    // =====================
     private Integer salaryId;
     private BigDecimal amountVnd;
     private String currency;

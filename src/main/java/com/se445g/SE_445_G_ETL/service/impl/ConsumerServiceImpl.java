@@ -1,5 +1,7 @@
 package com.se445g.SE_445_G_ETL.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.se445g.SE_445_G_ETL.config.RabbitMQConfig;
 import com.se445g.SE_445_G_ETL.dto.EmployeeDTO;
 import com.se445g.SE_445_G_ETL.dto.PerformanceDTO;
@@ -8,6 +10,10 @@ import com.se445g.SE_445_G_ETL.mapper.EmployeeMapper;
 import com.se445g.SE_445_G_ETL.mapper.PerformanceMapper;
 import com.se445g.SE_445_G_ETL.repository.staging.*;
 import com.se445g.SE_445_G_ETL.service.interf.ConsumerService;
+import com.se445g.SE_445_G_ETL.validation.ValidationFactory;
+import com.se445g.SE_445_G_ETL.validation.ValidationResult;
+import com.se445g.SE_445_G_ETL.validation.component.ValidationRule;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -34,6 +40,13 @@ public class ConsumerServiceImpl implements ConsumerService {
     private final STG_DepartmentPerformanceRepository departmentPerformanceRepository;
     private final STG_KpiMetricsRepository kpiMetricsRepository;
 
+    // Validation Factory
+    private final ValidationFactory validationFactory;
+    
+    // Error Record Repository
+    private final STG_ErrorRecordRepository errorRecordRepository;
+    private final ObjectMapper objectMapper;
+
     @RabbitListener(queues = RabbitMQConfig.EMPLOYEES_QUEUE)
     @Transactional
     public void receiveCSVData(EmployeeDTO dto) {
@@ -41,6 +54,19 @@ public class ConsumerServiceImpl implements ConsumerService {
         if (type == null) {
             log.warn("Đã nhận message không có recordType: {}", dto);
             return;
+        }
+
+        ValidationRule<EmployeeDTO> employeeChain = validationFactory.getChain(type);
+
+        if (employeeChain == null) {
+            log.warn("Không tìm thấy cấu hình Validation cho recordType: {}", type);
+        } else {
+            ValidationResult result = employeeChain.validate(dto);
+
+            if (!result.isValid()) {
+                handleValidationError(dto, result);
+                return; // Dừng xử lý ETL nếu có lỗi validation
+            }
         }
 
         try {
@@ -112,7 +138,7 @@ public class ConsumerServiceImpl implements ConsumerService {
             }
         } catch (Exception e) {
             log.error("Lỗi khi xử lý DTO (type: {}). DTO: {}. Lỗi: {}", type, dto, e.getMessage(), e);
-            throw e; // Ném lại lỗi để transaction rollback và đưa vào DLQ (nếu có)
+            throw e; 
         }
     }
 
@@ -149,5 +175,28 @@ public class ConsumerServiceImpl implements ConsumerService {
         STG_KpiMetrics kpi = performanceMapper.dtoToKpiMetrics(dto);
         kpi.setKpiId(null); // Luôn INSERT
         kpiMetricsRepository.save(kpi);
+    }
+
+    private <T> void handleValidationError(T dto, ValidationResult result) {
+        log.warn("Bản ghi có lỗi validation. Lưu vào STG_ErrorRecord.");
+        try {
+            STG_ErrorRecord errorRecord = new STG_ErrorRecord();
+            
+            String recordType = "UNKNOWN";
+            if (dto instanceof EmployeeDTO) {
+                recordType = ((EmployeeDTO) dto).getRecordType();
+            } else if (dto instanceof PerformanceDTO) {
+                 recordType = ((PerformanceDTO) dto).getRecordType();
+            }
+            
+            errorRecord.setRecordType(recordType);
+            errorRecord.setRawData(objectMapper.writeValueAsString(dto)); 
+            errorRecord.setErrors(String.join("\n", result.getErrors()));
+            
+            errorRecordRepository.save(errorRecord);
+            
+        } catch (JsonProcessingException e) {
+            log.error("Lỗi khi chuyển đổi DTO sang JSON để lưu STG_ErrorRecord: {}", e.getMessage(), e);
+        }
     }
 }

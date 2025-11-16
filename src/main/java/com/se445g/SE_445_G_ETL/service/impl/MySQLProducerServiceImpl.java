@@ -19,7 +19,7 @@ public class MySQLProducerServiceImpl implements MySQLProducerService {
 
     private final JdbcTemplate jdbcTemplate;
     private final RabbitTemplate rabbitTemplate;
-    private final PerformanceMapper performanceMapper; // Tiêm mapper
+    private final PerformanceMapper performanceMapper;
 
     // Định nghĩa các hằng số recordType
     private static final String TYPE_REVIEW = "REVIEW";
@@ -35,10 +35,8 @@ public class MySQLProducerServiceImpl implements MySQLProducerService {
         // Gửi theo thứ tự phụ thuộc: Các bảng không có khóa ngoại trước
         sendReviews();
         sendKpiMetrics();
-        // Các bảng phụ thuộc
         sendDepartmentPerformance();
         sendEmployeePerformance();
-        // Bảng phụ thuộc cuối cùng
         sendTaskPerformance();
 
         log.info("Đã gửi tất cả dữ liệu Performance lên RabbitMQ.");

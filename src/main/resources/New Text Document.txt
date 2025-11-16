@@ -1,414 +1,317 @@
----entity mới---
-package com.se445g.SE_445_G_ETL.entity.staging;
+package com.se445g.SE_445_G_ETL.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Entity
-@Table(name = "stg_task_performance")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class STG_TaskPerformance {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long taskId;
-
-    private Long employeePerformanceId;
-
-    private String taskName;
-
-    private Integer taskScore;
-
-    private String note;
-}
-package com.se445g.SE_445_G_ETL.entity.staging;
-
-import java.time.LocalDateTime;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Entity
-@Table(name = "stg_employee_performance")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class STG_EmployeePerformance {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private Long employeeId;
-
-    private Long reviewId;
-
-    private Integer performanceScore;
-
-    private String comments;
-
-    private LocalDateTime createdAt;
-}
-package com.se445g.SE_445_G_ETL.entity.staging;
-
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Entity
-@Table(name = "stg_performance_review")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class STG_PerformanceReview {
+public class EmployeeDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reviewId;
+    // TRƯỜNG MỚI ĐỂ PHÂN LOẠI
+    // Sẽ là "DEPARTMENT", "EMPLOYEE", hoặc "SALARY"
+    private String recordType;
 
-    private String period;
+    // Thông tin nhân viên
+    private Integer employeeId;
+    private String fullName;
+    private String gender;
+    private LocalDate dateOfBirth;
+    private String hometown;
+    private String phone;
+    private String email;
+    private String educationLevel;
+    private String position;
+    private LocalDate hireDate;
+    private String employeeStatus;
 
-    private LocalDate startDate;
+    // Thông tin phòng ban
+    private Integer departmentId;
+    private String departmentName;
+    private String departmentLocation;
+    private String departmentPhone;
+    private BigDecimal departmentBudgetVnd;
+    private Integer managerId;
 
-    private LocalDate endDate;
-
-    private String description;
+    // Thông tin lương
+    private Integer salaryId;
+    private BigDecimal amountVnd;
+    private String currency;
+    private String payFrequency;
+    private BigDecimal bonusVnd;
+    private LocalDate effectiveFrom;
+    private LocalDate effectiveTo;
 }
-package com.se445g.SE_445_G_ETL.entity.staging;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Entity
-@Table(name = "stg_department_performance")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class STG_DepartmentPerformance {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long deptPerfId;
-
-    private Long departmentId;
-
-    private Long reviewId;
-
-    private Double averageScore;
-
-    private String ranking;
-
-    private String remarks;
-
-}
-package com.se445g.SE_445_G_ETL.entity.staging;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Entity
-@Table(name = "stg_kpi_metrics")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class STG_KpiMetrics {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long kpiId;
-
-    private String kpiName;
-
-    private String description;
-
-    private Double weight;
-
-    private String category;
-}
-
----entity mới---
-
----rabbitmq config---
-package com.se445g.SE_445_G_ETL.config;
-
-import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
-public class RabbitMQConfig {
-
-    // Tên queue, exchange, routing key
-    public static final String EXCHANGE_NAME = "etl_exchange";
-
-    //employees
-    public static final String EMPLOYEES_QUEUE = "employees_queue";
-    public static final String EMPLOYEES_ROUTING_KEY = "employees_routing_key";
-    
-    //performance
-    public static final String PERFORMANCE_QUEUE = "performance_queue";
-    public static final String PERFORMANCE_ROUTING_KEY = "performance_routing_key";
-
-    @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(EXCHANGE_NAME);
-    }
-
-    @Bean
-    public Queue employeesQueue() {
-        return new Queue(EMPLOYEES_QUEUE, true);
-    }
-    
-    @Bean
-    public Queue performanceQueue() {
-        return new Queue(PERFORMANCE_QUEUE, true);
-    }
-
-    @Bean
-    public Binding employeesBinding(Queue employeesQueue, TopicExchange exchange) {
-        return BindingBuilder.bind(employeesQueue).to(exchange).with(EMPLOYEES_ROUTING_KEY);
-    }
-    
-    @Bean
-    public Binding performanceBinding(Queue performanceQueue, TopicExchange exchange) {
-        return BindingBuilder.bind(performanceQueue).to(exchange).with(PERFORMANCE_ROUTING_KEY);
-    }
-
-    @Bean
-    public Jackson2JsonMessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
-
-    @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
-        RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(jsonMessageConverter());
-        return template; 
-    }
-}
----fatDTO mới---
-
-
-đọc toàn bộ entity ở trên rồi tạo ra fatDTO, mapper với mapstruct sau đó chỉnh sửa lại producer và consumer sau
----producer cũ---
 package com.se445g.SE_445_G_ETL.service.impl;
 
-import java.time.LocalDateTime;
-
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Service;
-
+import com.opencsv.CSVReader;
 import com.se445g.SE_445_G_ETL.config.RabbitMQConfig;
-import com.se445g.SE_445_G_ETL.dto.PerformanceDTO;
-import com.se445g.SE_445_G_ETL.service.interf.MySQLProducerService;
-
+import com.se445g.SE_445_G_ETL.dto.EmployeeDTO;
+import com.se445g.SE_445_G_ETL.entity.staging.STG_Department;
+import com.se445g.SE_445_G_ETL.entity.staging.STG_Employee;
+import com.se445g.SE_445_G_ETL.entity.staging.STG_Salary;
+import com.se445g.SE_445_G_ETL.mapper.EmployeeMapper;
+import com.se445g.SE_445_G_ETL.service.interf.CSVProducerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.stereotype.Service;
+
+import java.io.FileReader;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MySQLProducerServiceImpl implements MySQLProducerService {
+public class CSVProducerServiceImpl implements CSVProducerService {
 
-    // JdbcTemplate để đọc từ MySQL nguồn (Source)
-    private final JdbcTemplate jdbcTemplate;
-
-    // RabbitTemplate để gửi đến RabbitMQ
     private final RabbitTemplate rabbitTemplate;
+    private final EmployeeMapper employeeMapper;
 
     // Định nghĩa các hằng số cho recordType
-    private static final String TYPE_EMP = "EMPLOYEEPERFORMANCE";
-    private static final String TYPE_REVIEW = "REVIEW";
-    private static final String TYPE_TASK = "TASKPERFORMANCE";
+    private static final String TYPE_DEPT = "DEPARTMENT";
+    private static final String TYPE_EMP = "EMPLOYEE";
+    private static final String TYPE_SALARY = "SALARY";
 
     @Override
-    public void sendMySQLData() {
-        log.info("Bắt đầu quá trình gửi dữ liệu Performance từ MySQL...");
+    public void sendCSVData(String departmentPath, String employeePath, String salaryPath) {
+        log.info("Bắt đầu quá trình gửi dữ liệu CSV...");
 
-        // Chạy 3 quy trình độc lập, TẤT CẢ gửi về 1 queue
-        sendReview();
-        sendEmployeePerformance();
-        sendTaskPerformance();
+        sendDepartments(departmentPath);
+        sendEmployees(employeePath);
+        sendSalaries(salaryPath);
 
-        log.info("Đã gửi tất cả dữ liệu Performance lên RabbitMQ.");
+        log.info("Đã gửi tất cả dữ liệu CSV lên RabbitMQ.");
     }
 
-    /**
-     * Đọc từ bảng 'task_performance' và gửi DTO loại
-     * TASKPERFORMANCE
-     */
-    private void sendTaskPerformance() {
-        // Giả định 'id' trong DTO sẽ mang employee_performance_id
-        String sql = "SELECT task_id, employee_performance_id, task_name, task_score, note FROM task_performance";
+    private void sendDepartments(String departmentPath) {
+        try (CSVReader reader = new CSVReader(new FileReader(departmentPath))) {
+            String[] line;
+            reader.readNext(); // Bỏ qua dòng tiêu đề
+            log.info("Đang gửi dữ liệu Departments...");
 
-        RowMapper<PerformanceDTO> rowMapper = (rs, rowNum) -> PerformanceDTO.builder()
-                .recordType(TYPE_TASK)
-                .id(rs.getInt("employee_performance_id")) // ** QUAN TRỌNG: Gửi ID của cha (EmployeePerformance)
-                .taskId(rs.getInt("task_id")) // Gửi ID của chính nó
-                .taskName(rs.getString("task_name"))
-                .taskScore(rs.getBigDecimal("task_score"))
-                .taskNote(rs.getString("note"))
-                .build();
+            while ((line = reader.readNext()) != null) {
+                // 1. Tạo entity tạm thời từ dữ liệu CSV
+                STG_Department tempDept = STG_Department.builder()
+                        .departmentId(Integer.parseInt(line[0]))
+                        .name(line[1])
+                        .location(line[2])
+                        .phone(line[3])
+                        .budgetVnd(new BigDecimal(line[4]))
+                        .managerId(Integer.parseInt(line[5]))
+                        .build();
 
-        jdbcTemplate.query(sql, rowMapper).forEach(this::sendToQueue);
-        log.info("Đã gửi dữ liệu TaskPerformances.");
+                // 2. Dùng mapper để chuyển entity thành DTO
+                EmployeeDTO dto = employeeMapper.departmentToDto(tempDept);
+
+                // 3. Đặt recordType và gửi đi
+                dto.setRecordType(TYPE_DEPT);
+                sendToQueue(dto);
+            }
+            log.info("Hoàn thành gửi dữ liệu Departments.");
+        } catch (Exception e) {
+            log.error("Lỗi khi đọc file departments.csv: {}", e.getMessage(), e);
+        }
     }
 
-    /**
-     * Đọc từ bảng 'performance_review' và gửi DTO loại REVIEW
-     */
-    private void sendReview() {
-        String sql = "SELECT review_id, period, start_date, end_date, description FROM performance_review";
+    private void sendEmployees(String employeePath) {
+        try (CSVReader reader = new CSVReader(new FileReader(employeePath))) {
+            String[] line;
+            reader.readNext(); // Bỏ qua dòng tiêu đề
+            log.info("Đang gửi dữ liệu Employees...");
 
-        RowMapper<PerformanceDTO> rowMapper = (rs, rowNum) -> PerformanceDTO.builder()
-                .recordType(TYPE_REVIEW)
-                .reviewId(rs.getInt("review_id"))
-                .period(rs.getString("period"))
-                .startDate(rs.getDate("start_date").toLocalDate())
-                .endDate(rs.getDate("end_date").toLocalDate())
-                .reviewDescription(rs.getString("description"))
-                .build();
+            while ((line = reader.readNext()) != null) {
+                // Tạo proxy cho department để set khóa ngoại
+                STG_Department deptProxy = new STG_Department();
+                deptProxy.setDepartmentId(Integer.parseInt(line[10]));
 
-        jdbcTemplate.query(sql, rowMapper).forEach(this::sendToQueue);
-        log.info("Đã gửi dữ liệu Reviews.");
+                // 1. Tạo entity tạm thời
+                STG_Employee tempEmp = STG_Employee.builder()
+                        .employeeId(Integer.parseInt(line[0]))
+                        .fullName(line[1])
+                        .gender(line[2])
+                        .dateOfBirth(LocalDate.parse(line[3]))
+                        .hometown(line[4])
+                        .phone(line[5])
+                        .email(line[6])
+                        .educationLevel(line[7])
+                        .position(line[8])
+                        .hireDate(LocalDate.parse(line[9]))
+                        .status(line[11])
+                        .department(deptProxy) // Gán proxy
+                        .build();
+
+                // 2. Dùng mapper chuyển thành DTO
+                EmployeeDTO dto = employeeMapper.employeeToDto(tempEmp);
+
+                // 3. Đặt recordType và gửi đi
+                dto.setRecordType(TYPE_EMP);
+                sendToQueue(dto);
+            }
+            log.info("Hoàn thành gửi dữ liệu Employees.");
+        } catch (Exception e) {
+            log.error("Lỗi khi đọc file employees.csv: {}", e.getMessage(), e);
+        }
     }
 
-    /**
-     * Đọc từ bảng 'employee_performance' và gửi DTO loại
-     * EMPLOYEEPERFORMANCE
-     */
-    private void sendEmployeePerformance() {
-        String sql = "SELECT id, employee_id, review_id, performance_score, comments, created_at FROM employee_performance";
+    private void sendSalaries(String salaryPath) {
+        try (CSVReader reader = new CSVReader(new FileReader(salaryPath))) {
+            String[] line;
+            reader.readNext(); // Bỏ qua dòng tiêu đề
+            log.info("Đang gửi dữ liệu Salaries...");
 
-        RowMapper<PerformanceDTO> rowMapper = (rs, rowNum) -> PerformanceDTO.builder()
-                .recordType(TYPE_EMP)
-                .id(rs.getInt("id"))
-                .employeeId(rs.getInt("employee_id"))
-                .reviewId(rs.getInt("review_id")) // Gửi khóa ngoại
-                .performanceScore(rs.getBigDecimal("performance_score"))
-                .comments(rs.getString("comments"))
-                .createdAt(rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime()
-                        : LocalDateTime.now())
-                .build();
+            while ((line = reader.readNext()) != null) {
+                // Tạo proxy cho employee
+                STG_Employee empProxy = new STG_Employee();
+                empProxy.setEmployeeId(Integer.parseInt(line[1]));
 
-        jdbcTemplate.query(sql, rowMapper).forEach(this::sendToQueue);
-        log.info("Đã gửi dữ liệu EmployeePerformances.");
+                // 1. Tạo entity tạm thời
+                STG_Salary tempSalary = STG_Salary.builder()
+                        .salaryId(Integer.parseInt(line[0]))
+                        .amountVnd(new BigDecimal(line[2]))
+                        .currency(line[3])
+                        .payFrequency(line[4])
+                        .bonusVnd(new BigDecimal(line[5]))
+                        .effectiveFrom(LocalDate.parse(line[6]))
+                        .effectiveTo(line[7].isEmpty() ? null : LocalDate.parse(line[7]))
+                        .employee(empProxy)
+                        .build();
+
+                // 2. Dùng mapper chuyển thành DTO
+                EmployeeDTO dto = employeeMapper.salaryToDto(tempSalary);
+
+                // 3. Đặt recordType và gửi đi
+                dto.setRecordType(TYPE_SALARY);
+                sendToQueue(dto);
+            }
+            log.info("Hoàn thành gửi dữ liệu Salaries.");
+        } catch (Exception e) {
+            log.error("Lỗi khi đọc file salaries.csv: {}", e.getMessage(), e);
+        }
     }
 
-    /**
-     * Phương thức chung để gửi DTO đến 1 queue duy nhất
-     */
-    private void sendToQueue(PerformanceDTO dto) {
+    private void sendToQueue(EmployeeDTO dto) {
         rabbitTemplate.convertAndSend(
                 RabbitMQConfig.EXCHANGE_NAME,
-                RabbitMQConfig.PERFORMANCE_ROUTING_KEY,
+                RabbitMQConfig.EMPLOYEES_ROUTING_KEY,
                 dto);
     }
 }
-
----consumer cũ---
 package com.se445g.SE_445_G_ETL.service.impl;
 
-import java.time.LocalDateTime;
-
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.se445g.SE_445_G_ETL.config.RabbitMQConfig;
 import com.se445g.SE_445_G_ETL.dto.EmployeeDTO;
 import com.se445g.SE_445_G_ETL.dto.PerformanceDTO;
-import com.se445g.SE_445_G_ETL.entity.staging.STG_Department;
-import com.se445g.SE_445_G_ETL.entity.staging.STG_Employee;
-import com.se445g.SE_445_G_ETL.entity.staging.STG_EmployeePerformance;
-import com.se445g.SE_445_G_ETL.entity.staging.STG_PerformanceReview;
-import com.se445g.SE_445_G_ETL.entity.staging.STG_Salary;
-import com.se445g.SE_445_G_ETL.entity.staging.STG_TaskPerformance;
-import com.se445g.SE_445_G_ETL.repository.staging.STG_DepartmentRepository;
-import com.se445g.SE_445_G_ETL.repository.staging.STG_EmployeePerformanceRepository;
-import com.se445g.SE_445_G_ETL.repository.staging.STG_EmployeeRepository;
-import com.se445g.SE_445_G_ETL.repository.staging.STG_PerformanceReviewRepository;
-import com.se445g.SE_445_G_ETL.repository.staging.STG_SalaryRepository;
-import com.se445g.SE_445_G_ETL.repository.staging.STG_TaskPerformanceRepository;
+import com.se445g.SE_445_G_ETL.entity.staging.*;
+import com.se445g.SE_445_G_ETL.mapper.EmployeeMapper;
+import com.se445g.SE_445_G_ETL.mapper.PerformanceMapper;
+import com.se445g.SE_445_G_ETL.repository.staging.*;
 import com.se445g.SE_445_G_ETL.service.interf.ConsumerService;
+import com.se445g.SE_445_G_ETL.validation.ValidationFactory;
+import com.se445g.SE_445_G_ETL.validation.ValidationResult;
+import com.se445g.SE_445_G_ETL.validation.component.ValidationRule;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ConsumerServiceImpl implements ConsumerService {
-    
+
+    // Mapper
+    private final EmployeeMapper employeeMapper;
+    private final PerformanceMapper performanceMapper;
+
+    // Repositories
+    private final STG_DepartmentRepository departmentRepository;
+    private final STG_EmployeeRepository employeeRepository;
+    private final STG_SalaryRepository salaryRepository;
+
     private final STG_PerformanceReviewRepository reviewRepository;
     private final STG_EmployeePerformanceRepository employeePerformanceRepository;
     private final STG_TaskPerformanceRepository taskPerformanceRepository;
+    private final STG_DepartmentPerformanceRepository departmentPerformanceRepository;
+    private final STG_KpiMetricsRepository kpiMetricsRepository;
 
-    /**
-     * Một Listener duy nhất lắng nghe PERFORMANCE_QUEUE
-     */
+    // Validation Factory
+    private final ValidationFactory validationFactory;
+    
+    // Error Record Repository
+    private final STG_ErrorRecordRepository errorRecordRepository;
+    private final ObjectMapper objectMapper;
+
+    @RabbitListener(queues = RabbitMQConfig.EMPLOYEES_QUEUE)
+    @Transactional
+    public void receiveCSVData(EmployeeDTO dto) {
+        // 1. ÁP DỤNG VALIDATION ENGINE (COR + COMPOSITE)
+        ValidationRule<EmployeeDTO> employeeChain = validationFactory.getChain();
+        ValidationResult result = employeeChain.validate(dto);
+
+        if (!result.isValid()) {
+            handleValidationError(dto, result);
+            return;
+        }
+
+        String type = dto.getRecordType();
+        if (type == null) {
+            log.warn("Đã nhận message không có recordType: {}", dto);
+            return;
+        }
+
+        try {
+            switch (type) {
+                case "DEPARTMENT":
+                    processDepartment(dto);
+                    break;
+                case "EMPLOYEE":
+                    processEmployee(dto);
+                    break;
+                case "SALARY":
+                    processSalary(dto);
+                    break;
+                default:
+                    log.warn("Không nhận diện được recordType: '{}'", type);
+            }
+        } catch (Exception e) {
+            log.error("Lỗi khi xử lý DTO (type: {}): {}", type, e.getMessage(), e);
+        }
+    }
+
+    private void processDepartment(EmployeeDTO dto) {
+        log.info("Processing DEPARTMENT: {}", dto.getDepartmentId());
+        STG_Department department = employeeMapper.dtoToDepartment(dto);
+        departmentRepository.save(department);
+    }
+
+    private void processEmployee(EmployeeDTO dto) {
+        log.info("Processing EMPLOYEE: {}", dto.getEmployeeId());
+        STG_Employee employee = employeeMapper.dtoToEmployee(dto);
+        employeeRepository.save(employee);
+    }
+
+    private void processSalary(EmployeeDTO dto) {
+        log.info("Processing SALARY for Employee: {}", dto.getEmployeeId());
+        STG_Salary salary = employeeMapper.dtoToSalary(dto);
+        salary.setSalaryId(null);
+        salaryRepository.save(salary);
+    }
+
     @RabbitListener(queues = RabbitMQConfig.PERFORMANCE_QUEUE)
-    @Transactional // Đảm bảo mỗi tin nhắn được xử lý như 1 giao dịch
+    @Transactional
     public void receiveMySQLData(PerformanceDTO dto) {
-        
         String type = dto.getRecordType();
         if (type == null) {
             log.warn("Đã nhận message không có recordType: {}", dto);
@@ -420,96 +323,84 @@ public class ConsumerServiceImpl implements ConsumerService {
                 case "REVIEW":
                     processReview(dto);
                     break;
-                case "EMPLOYEEPERFORMANCE":
+                case "EMPLOYEE_PERFORMANCE":
                     processEmployeePerformance(dto);
                     break;
-                case "TASKPERFORMANCE":
+                case "TASK_PERFORMANCE":
                     processTaskPerformance(dto);
+                    break;
+                case "DEPT_PERFORMANCE":
+                    processDepartmentPerformance(dto);
+                    break;
+                case "KPI_METRIC":
+                    processKpiMetric(dto);
                     break;
                 default:
                     log.warn("Không nhận diện được recordType: '{}'", type);
             }
         } catch (Exception e) {
-            // === THÊM LOGGING CHI TIẾT VÀO ĐÂY ===
-            String parentId = (type.equals("TASKPERFORMANCE")) ? String.valueOf(dto.getId()) : "N/A";
-            String childId = (type.equals("TASKPERFORMANCE")) ? String.valueOf(dto.getTaskId())
-                    : String.valueOf(dto.getId());
-
-            log.error("LỖI XỬ LÝ ETL (Type: {}). ParentID: {}, ChildID: {}. DTO: {}. Lỗi: {}",
-                    type,
-                    parentId,
-                    childId,
-                    dto.toString(),
-                    e.getMessage());
-            // Chúng ta không ném lại lỗi để tránh message bị requeue (vòng lặp lỗi)
-            // Thay vào đó, message này sẽ được "ack" (coi như đã xử lý)
-            // Bạn có thể thiết lập Dead Letter Queue (DLQ) để giữ lại các message lỗi này
+            log.error("Lỗi khi xử lý DTO (type: {}). DTO: {}. Lỗi: {}", type, dto, e.getMessage(), e);
+            throw e; // Ném lại lỗi để transaction rollback và đưa vào DLQ (nếu có)
         }
     }
 
-    /**
-     * Xử lý lưu STG_PerformanceReview
-     */
     private void processReview(PerformanceDTO dto) {
         log.info("Processing REVIEW: {}", dto.getReviewId());
-        STG_PerformanceReview review = STG_PerformanceReview.builder()
-                .reviewId(dto.getReviewId())
-                .period(dto.getPeriod())
-                .startDate(dto.getStartDate())
-                .endDate(dto.getEndDate())
-                .description(dto.getReviewDescription())
-                .build();
-        // Dùng save() cho logic "Upsert" (Update nếu ID tồn tại, Insert nếu chưa)
+        STG_PerformanceReview review = performanceMapper.dtoToReview(dto);
+        review.setReviewId(null); // Luôn INSERT
         reviewRepository.save(review);
     }
 
-    /**
-     * Xử lý lưu STG_EmployeePerformance
-     */
     private void processEmployeePerformance(PerformanceDTO dto) {
-        log.info("Processing EMPLOYEEPERFORMANCE: {}", dto.getId());
-
-        // 1. Tạo proxy cho Review (để set khóa ngoại)
-        STG_PerformanceReview reviewProxy = new STG_PerformanceReview();
-        reviewProxy.setReviewId(dto.getReviewId());
-
-        // 2. Build đối tượng chính
-        STG_EmployeePerformance empPerf = STG_EmployeePerformance.builder()
-                .id(dto.getId())
-                .employeeId(dto.getEmployeeId())
-                .review(reviewProxy) // Gán proxy
-                .performanceScore(dto.getPerformanceScore())
-                .comments(dto.getComments())
-                .createdAt(dto.getCreatedAt() != null ? dto.getCreatedAt() : LocalDateTime.now())
-                .build();
-        
-        // 3. Dùng save() cho logic "Upsert"
+        log.info("Processing EMPLOYEE_PERFORMANCE: {}", dto.getEmployeePerformanceId());
+        STG_EmployeePerformance empPerf = performanceMapper.dtoToEmployeePerformance(dto);
+        empPerf.setId(null); // Luôn INSERT
         employeePerformanceRepository.save(empPerf);
     }
 
-    /**
-     * Xử lý lưu STG_TaskPerformance
-     */
     private void processTaskPerformance(PerformanceDTO dto) {
-        log.info("Processing TASKPERFORMANCE: {}", dto.getTaskId());
-
-        // 1. Tạo proxy cho EmployeePerformance (để set khóa ngoại)
-        // Dựa trên logic của Producer, dto.getId() đang giữ employee_performance_id
-        STG_EmployeePerformance empPerfProxy = new STG_EmployeePerformance();
-        empPerfProxy.setId(dto.getId()); 
-
-        // 2. Build đối tượng chính
-        STG_TaskPerformance taskPerf = STG_TaskPerformance.builder()
-                .taskId(dto.getTaskId())
-                .employeePerformance(empPerfProxy) // Gán proxy
-                .taskName(dto.getTaskName())
-                .taskScore(dto.getTaskScore())
-                .note(dto.getTaskNote())
-                .build();
-
-        // 3. Dùng save() cho logic "Upsert"
+        log.info("Processing TASK_PERFORMANCE: {}", dto.getTaskId());
+        STG_TaskPerformance taskPerf = performanceMapper.dtoToTaskPerformance(dto);
+        taskPerf.setTaskId(null); // Luôn INSERT
         taskPerformanceRepository.save(taskPerf);
     }
 
-}
+    private void processDepartmentPerformance(PerformanceDTO dto) {
+        log.info("Processing DEPT_PERFORMANCE: {}", dto.getDeptPerfId());
+        STG_DepartmentPerformance deptPerf = performanceMapper.dtoToDepartmentPerformance(dto);
+        deptPerf.setDeptPerfId(null); // Luôn INSERT
+        departmentPerformanceRepository.save(deptPerf);
+    }
 
+    private void processKpiMetric(PerformanceDTO dto) {
+        log.info("Processing KPI_METRIC: {}", dto.getKpiId());
+        STG_KpiMetrics kpi = performanceMapper.dtoToKpiMetrics(dto);
+        kpi.setKpiId(null); // Luôn INSERT
+        kpiMetricsRepository.save(kpi);
+    }
+
+    private <T> void handleValidationError(T dto, ValidationResult result) {
+        log.warn("Bản ghi có lỗi validation. Lưu vào STG_ErrorRecord.");
+        try {
+            STG_ErrorRecord errorRecord = new STG_ErrorRecord();
+            
+            String recordType = "UNKNOWN";
+            if (dto instanceof EmployeeDTO) {
+                recordType = ((EmployeeDTO) dto).getRecordType();
+            } else if (dto instanceof PerformanceDTO) {
+                 recordType = ((PerformanceDTO) dto).getRecordType();
+            }
+            
+            errorRecord.setRecordType(recordType);
+            // Convert DTO thành JSON để lưu toàn bộ bản ghi lỗi
+            errorRecord.setRawData(objectMapper.writeValueAsString(dto)); 
+            errorRecord.setErrors(String.join("\n", result.getErrors())); // Gộp list lỗi thành chuỗi
+            
+            errorRecordRepository.save(errorRecord);
+            
+        } catch (JsonProcessingException e) {
+            log.error("Lỗi khi chuyển đổi DTO sang JSON để lưu STG_ErrorRecord: {}", e.getMessage(), e);
+        }
+    }
+}
+{"recordType":"DEPARTMENT","employeeId":null,"fullName":null,"gender":null,"dateOfBirth":null,"hometown":null,"phone":"0585732563","email":null,"educationLevel":null,"position":null,"hireDate":null,"employeeStatus":null,"departmentId":1,"departmentName":"Phòng Kinh doanh","departmentLocation":"Tầng 3","departmentPhone":"0585732563","departmentBudgetVnd":2283080234,"managerId":168,"salaryId":null,"amountVnd":null,"currency":null,"payFrequency":null,"bonusVnd":null,"effectiveFrom":null,"effectiveTo":null}

@@ -13,10 +13,9 @@ import org.springframework.data.domain.Persistable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class STG_Employee implements Persistable<Integer> { // <--- IMPLEMENTS Persistable
+public class STG_Employee implements Persistable<Integer> {
 
     @Id
-    // KHÔNG CÓ @GeneratedValue
     private Integer employeeId;
 
     private String fullName;
@@ -36,8 +35,6 @@ public class STG_Employee implements Persistable<Integer> { // <--- IMPLEMENTS P
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<STG_Salary> salaries;
-
-    // === THÊM TRƯỜNG VÀ PHƯƠNG THỨC SAU ===
 
     @Transient
     @Builder.Default

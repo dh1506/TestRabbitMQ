@@ -42,7 +42,6 @@ public class STG_Salary {
 
     private LocalDate effectiveTo;
 
-    // Quan hệ n-nhiều: nhiều bản ghi lương thuộc 1 nhân viên
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private STG_Employee employee;
