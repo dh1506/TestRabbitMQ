@@ -124,7 +124,6 @@ public class PerformanceValidationFactory {
     private void buildReviewFormatRules(ValidationRuleGroup<PerformanceDTO> group) {
         group.addRule(new NotNullRule<>("reviewId", PerformanceDTO::getReviewId));
 
-        // Period: Ví dụ format "Q1-2024" hoặc "2024"
         group.addRule(new RegexRule<>(
                 "period", PerformanceDTO::getPeriod,
                 "^Q[1-4]-\\d{4}$", // Regex: Q1-2024, Q2-2025...
@@ -151,8 +150,6 @@ public class PerformanceValidationFactory {
     }
 
     private void buildEmpPerfBusinessRules(ValidationRuleGroup<PerformanceDTO> group) {
-        // Điểm số nhân viên: 0 - 100 (Integer)
-        // NumericRangeRule tự động hiểu Integer -> double để so sánh
         group.addRule(new NumericRangeRule<>(
                 "performanceScore", PerformanceDTO::getPerformanceScore,
                 0.0, 100.0
@@ -160,15 +157,7 @@ public class PerformanceValidationFactory {
     }
 
     private void buildEmpPerfRefRules(ValidationRuleGroup<PerformanceDTO> group) {
-        // Check xem employeeId có tồn tại trong hệ thống HR không
-        // Cần inject cache hoặc service vào đây như bài trước
-        /*
-        group.addRule(new ForeignKeyRule<>(
-             "employeeId", PerformanceDTO::getEmployeeId,
-             (id) -> validEmployeeIdsCache.contains(id),
-             "Nhân viên"
-        ));
-        */
+
     }
 
     // =================================================================
@@ -194,14 +183,7 @@ public class PerformanceValidationFactory {
     }
 
     private void buildDeptPerfRefRules(ValidationRuleGroup<PerformanceDTO> group) {
-        // Check departmentId có tồn tại không
-        /*
-        group.addRule(new ForeignKeyRule<>(
-             "departmentId", PerformanceDTO::getDepartmentId,
-             (id) -> validDeptIdsCache.contains(id),
-             "Phòng ban"
-        ));
-        */
+
     }
 
     // =================================================================

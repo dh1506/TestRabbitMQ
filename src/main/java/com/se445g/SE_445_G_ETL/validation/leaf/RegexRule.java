@@ -29,7 +29,9 @@ public class RegexRule<T> implements ValidationRule<T> {
             return result;
         }
 
-        if (!pattern.matcher(value).matches()) {
+      String normalizedValue = value.trim();
+
+        if (!pattern.matcher(normalizedValue).matches()) {
             result.addError(String.format("%s (Giá trị hiện tại: '%s')", customMessage, value));
         }
 
