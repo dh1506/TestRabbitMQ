@@ -27,7 +27,7 @@ public class ValidationFactory {
 
     private static final String TYPE_DEPT = "DEPARTMENT";
     private static final String TYPE_EMP = "EMPLOYEE";
-    private static final String TYPE_SALARY = "SALARY"; // Đã bỏ comment
+    private static final String TYPE_SALARY = "SALARY";
 
     private record RuleConfiguration(
             Consumer<ValidationRuleGroup<EmployeeDTO>> formatRules,
@@ -41,8 +41,8 @@ public class ValidationFactory {
         // 1. DEPARTMENT CONFIGURATION
         configurations.put(TYPE_DEPT, new RuleConfiguration(
                 this::buildDepartmentFormatRules,
-                this::buildDepartmentBusinessRules, // Đã thêm Business Rules
-                group -> {} // Reference (Tạm để trống hoặc thêm ForeignKeyRule)
+                this::buildDepartmentBusinessRules,
+                group -> {}
         ));
 
         // 2. EMPLOYEE CONFIGURATION
@@ -52,7 +52,7 @@ public class ValidationFactory {
                 group -> {}
         ));
 
-        // 3. SALARY CONFIGURATION (Đã mở comment và map hàm)
+        // 3. SALARY CONFIGURATION
         configurations.put(TYPE_SALARY, new RuleConfiguration(
                 this::buildSalaryFormatRules,
                 this::buildSalaryBusinessRules,
@@ -78,9 +78,7 @@ public class ValidationFactory {
         return formatHandler;
     }
 
-    // =================================================================
-    //                      DEPARTMENT RULES
-    // =================================================================
+    // DEPARTMENT
 
     private void buildDepartmentFormatRules(ValidationRuleGroup<EmployeeDTO> group) {
         // ID & Name
@@ -90,14 +88,14 @@ public class ValidationFactory {
         // Regex cho Tên phòng ban (Chữ, số, &, dấu chấm, gạch ngang)
         group.addRule(new RegexRule<>(
                 "departmentName", EmployeeDTO::getDepartmentName,
-                "^[\\p{L}\\p{N}\\s&.-]+$",
-                "Tên phòng ban chứa ký tự không hợp lệ."
+          "^[\\p{L}\\p{N}\\s&./-]+$",
+          "Tên phòng ban chứa ký tự không hợp lệ (Cho phép: chữ, số, khoảng trắng và & . / -)."
         ));
 
         // Regex cho Phone (10-11 số)
         group.addRule(new RegexRule<>(
                 "departmentPhone", EmployeeDTO::getDepartmentPhone,
-                "^[0-9]{10,11}$",
+          "^0[35789][0-9]{8,9}$",
                 "SĐT phòng ban phải là số (10-11 chữ số)."
         ));
 
@@ -109,24 +107,21 @@ public class ValidationFactory {
                 "Địa chỉ phòng ban chứa ký tự đặc biệt."
         ));
 
-        // Format check cho Budget (Chỉ check NotNull, chưa check giá trị âm dương)
+        // Format check cho Budget (Chỉ check NotNull)
         group.addRule(new NotNullRule<>("departmentBudgetVnd", EmployeeDTO::getDepartmentBudgetVnd));
     }
 
     private void buildDepartmentBusinessRules(ValidationRuleGroup<EmployeeDTO> group) {
         // Check Ngân sách >= 0 và <= 1000 Tỷ
-        // Sử dụng BigDecimalRangeRule (Rule này quan trọng vì DTO dùng BigDecimal)
         group.addRule(new BigDecimalRangeRule<>(
                 "departmentBudgetVnd",
                 EmployeeDTO::getDepartmentBudgetVnd,
-                "0",               // Min String
-                "1000000000000"    // Max String (1 triệu tỷ)
+                "0",
+                "1000000000000"
         ));
     }
 
-    // =================================================================
-    //                      EMPLOYEE RULES
-    // =================================================================
+//    EMPLOYEE
 
     private void buildEmployeeFormatRules(ValidationRuleGroup<EmployeeDTO> group) {
         group.addRule(new NotNullRule<>("employeeId", EmployeeDTO::getEmployeeId));
@@ -140,12 +135,11 @@ public class ValidationFactory {
                 "Họ tên chứa ký tự không hợp lệ."
         ));
 
-        // Gender (M, F, O)
-        group.addRule(new RegexRule<>(
-                "gender", EmployeeDTO::getGender,
-                "^(M|F|O)$",
-                "Giới tính phải là: M, F, O."
-        ));
+      group.addRule(new AllowedValuesRule<>(
+        "gender",
+        EmployeeDTO::getGender,
+        "Nam", "Nữ", "Khác"
+      ).withMessage("Giới tính không hợp lệ. Giá trị chấp nhận: Nam, Nữ, Khác."));
 
         // Date NotNull
         group.addRule(new NotNullRule<>("dateOfBirth", EmployeeDTO::getDateOfBirth));
@@ -154,7 +148,7 @@ public class ValidationFactory {
         // Phone VN format
         group.addRule(new RegexRule<>(
                 "phone", EmployeeDTO::getPhone,
-                "^0\\d{9}$",
+          "^0[35789][0-9]{8,9}$",
                 "Số điện thoại không hợp lệ."
         ));
 
@@ -165,11 +159,13 @@ public class ValidationFactory {
                 "Email không đúng định dạng."
         ));
 
-        // Check Status theo List cứng
-        group.addRule(new AllowedValuesRule<>(
-                "employeeStatus", EmployeeDTO::getEmployeeStatus,
-                "ACTIVE", "PROBATION", "RESIGNED", "TERMINATED", "ON_LEAVE"
-        ));
+        // Check Status
+      group.addRule(new AllowedValuesRule<>(
+        "employeeStatus",
+        EmployeeDTO::getEmployeeStatus,
+        "Trạng thái phải là: Đang làm việc, Đã nghỉ việc, Tạm nghỉ.",
+        "Đang làm việc", "Đã nghỉ việc", "Tạm nghỉ"
+      ));
 
         // Hometown
         group.addRule(new RegexRule<>(
@@ -189,6 +185,7 @@ public class ValidationFactory {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // private void buildSalaryFormatRules(ValidationRuleGroup<EmployeeDTO> group) {
     //     group.addRule(new NotNullRule<>("amountVnd", EmployeeDTO::getAmountVnd));
     //     group.addRule(new NotNullRule<>("employeeId", EmployeeDTO::getEmployeeId));
@@ -202,24 +199,26 @@ public class ValidationFactory {
     //                      SALARY RULES (MỚI THÊM)
     // =================================================================
 
+=======
+//    SALARY
+>>>>>>> 75e609a (update check not null, status employee, status)
     private void buildSalaryFormatRules(ValidationRuleGroup<EmployeeDTO> group) {
-        // 1. Check ID & Lương cơ bản (Bắt buộc)
+        // 1. Check ID & Lương cơ bản
         group.addRule(new NotNullRule<>("salaryId", EmployeeDTO::getSalaryId));
         group.addRule(new NotNullRule<>("amountVnd", EmployeeDTO::getAmountVnd));
 
-        // 2. Check Đơn vị tiền tệ (Currency)
-        // Dùng AllowedValuesRule thay vì Regex để kiểm soát chặt chẽ các mã tiền tệ hỗ trợ
+        // 2. Check Đơn vị tiền tệ
         group.addRule(new AllowedValuesRule<>(
                 "currency",
                 EmployeeDTO::getCurrency,
-                "VND", "USD", "EUR", "JPY" // Danh sách ISO 4217 cho phép
+                "VND", "USD", "EUR"
         ));
 
-        // 3. Check Tần suất trả lương (Pay Frequency)
+        // 3. Check Tần suất trả lương
         group.addRule(new AllowedValuesRule<>(
                 "payFrequency",
                 EmployeeDTO::getPayFrequency,
-                "MONTHLY", "WEEKLY", "BI-WEEKLY", "HOURLY"
+                "Monthly", "Biweekly", "Weekly"
         ));
 
         // 4. Check Ngày hiệu lực
@@ -230,23 +229,20 @@ public class ValidationFactory {
         group.addRule(new BigDecimalRangeRule<>(
                 "amountVnd",
                 EmployeeDTO::getAmountVnd,
-                "4000000",          // Min (Dùng String để đảm bảo độ chính xác cho BigDecimal)
-                "2000000000"        // Max (Ví dụ: 2 tỷ)
+                "4000000",
+                "2000000000"
         ));
 
-        // 2. Logic Thưởng (Bonus) - Xử lý Optional
-        // Rule BigDecimalRangeRule tự động bỏ qua nếu giá trị là null.
-        // Nhưng nếu có giá trị, nó phải >= 0.
+        // 2. Logic Thưởng
+        // Có giá trị, nó phải >= 0.
         group.addRule(new BigDecimalRangeRule<>(
                 "bonusVnd",
                 EmployeeDTO::getBonusVnd,
-                "0",                // Min = 0 (Không được thưởng âm)
-                "10000000000"       // Max
+                "0",
+                "10000000000"
         ));
 
-        // 3. Logic Thời gian hiệu lực (From < To)
-        // Rule DateComparisonRule sẽ kiểm tra: Nếu cả 2 ngày đều không null thì From phải < To.
-        // Nếu effectiveTo là null (tức là đến hiện tại), rule này sẽ bỏ qua (Valid).
+        // 3. Logic Thời gian hiệu lực
         group.addRule(new DateComparisonRule<>(
                 EmployeeDTO::getEffectiveFrom,
                 EmployeeDTO::getEffectiveTo,
