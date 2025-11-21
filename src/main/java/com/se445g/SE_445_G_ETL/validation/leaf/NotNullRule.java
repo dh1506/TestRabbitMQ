@@ -17,7 +17,7 @@ public class NotNullRule<T, F> implements ValidationRule<T> {
     public ValidationResult validate(T data) {
         ValidationResult result = new ValidationResult();
         F value = getter.apply(data);
-
+        
         if (value == null) {
             result.addError(String.format("Lỗi Format Rule: Trường '%s' không được để trống (NULL).", fieldName));
         }
