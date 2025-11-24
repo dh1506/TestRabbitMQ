@@ -11,12 +11,12 @@ spring:
     staging:
       jdbc-url: jdbc:mysql://localhost:3306/db_staging
       username: root
-      password: 123456789
+      password: 1234
       driver-class-name: com.mysql.cj.jdbc.Driver
     performance:
       jdbc-url: jdbc:mysql://localhost:3306/db_performance
       username: root
-      password: 123456789
+      password: 1234
       driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -30,8 +30,8 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: admin
-    password: 123456
+    username: guest
+    password: guest
     listener:
       simple:
         concurrency: 1
