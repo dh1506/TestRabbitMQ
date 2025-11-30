@@ -16,7 +16,7 @@ public class RabbitMQConfig {
     //employees
     public static final String EMPLOYEES_QUEUE = "employees_queue";
     public static final String EMPLOYEES_ROUTING_KEY = "employees_routing_key";
-    
+
     //performance
     public static final String PERFORMANCE_QUEUE = "performance_queue";
     public static final String PERFORMANCE_ROUTING_KEY = "performance_routing_key";
@@ -30,7 +30,7 @@ public class RabbitMQConfig {
     public Queue employeesQueue() {
         return new Queue(EMPLOYEES_QUEUE, true);
     }
-    
+
     @Bean
     public Queue performanceQueue() {
         return new Queue(PERFORMANCE_QUEUE, true);
@@ -40,7 +40,7 @@ public class RabbitMQConfig {
     public Binding employeesBinding(Queue employeesQueue, TopicExchange exchange) {
         return BindingBuilder.bind(employeesQueue).to(exchange).with(EMPLOYEES_ROUTING_KEY);
     }
-    
+
     @Bean
     public Binding performanceBinding(Queue performanceQueue, TopicExchange exchange) {
         return BindingBuilder.bind(performanceQueue).to(exchange).with(PERFORMANCE_ROUTING_KEY);
@@ -55,6 +55,6 @@ public class RabbitMQConfig {
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(jsonMessageConverter());
-        return template; 
+        return template;
     }
 }

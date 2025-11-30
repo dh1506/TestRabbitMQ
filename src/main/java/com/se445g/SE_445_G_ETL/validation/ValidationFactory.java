@@ -34,6 +34,7 @@ public class ValidationFactory {
             Consumer<ValidationRuleGroup<EmployeeDTO>> formatRules,
             Consumer<ValidationRuleGroup<EmployeeDTO>> businessRules,
             Consumer<ValidationRuleGroup<EmployeeDTO>> referenceRules) {
+
     }
 
     @PostConstruct
@@ -106,7 +107,6 @@ public class ValidationFactory {
     //     group.addRule(new NotNullRule<>("amountVnd", EmployeeDTO::getAmountVnd));
     //     group.addRule(new NotNullRule<>("employeeId", EmployeeDTO::getEmployeeId));
     // }
-
     // private void buildSalaryBusinessRules(ValidationRuleGroup<EmployeeDTO> group) {
     //     group.addRule(new BusinessRuleExample());
     // }

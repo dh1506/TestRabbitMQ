@@ -10,12 +10,10 @@ public class MultiDataController {
 
     // private final PerformanceLogRepository performanceRepo;
     // private final UserStagingRepository stagingRepo;
-
     // @GetMapping("/performance")
     // public List<PerformanceLog> getPerformanceUsers() {
     //     return performanceRepo.findAll();
     // }
-
     // @GetMapping("/staging")
     // public List<UserStaging> getStagingUsers() {
     //     return stagingRepo.findAll();
