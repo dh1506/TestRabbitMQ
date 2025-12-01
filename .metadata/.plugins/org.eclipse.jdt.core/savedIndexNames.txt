@@ -1,0 +1,4 @@
+INDEX VERSION 1.134+E:\SE 445\TestRabbitMQ\.metadata\.plugins\org.eclipse.jdt.core
+1521185079.index
+1865797976.index
+1067094681.index

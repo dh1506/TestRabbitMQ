@@ -12,7 +12,7 @@ public class MessageProducer {
     private final RabbitTemplate rabbitTemplate;
 
     public void sendMessage(String message) {
-        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConfig.ROUTING_KEY, message);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME, RabbitMQConfig.EMPLOYEES_ROUTING_KEY, message);
         System.out.println("Sent message: " + message);
     }
 }
