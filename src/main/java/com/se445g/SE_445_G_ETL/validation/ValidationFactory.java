@@ -92,12 +92,12 @@ public class ValidationFactory {
           "Tên phòng ban chứa ký tự không hợp lệ (Cho phép: chữ, số, khoảng trắng và & . / -)."
         ));
 
-        // Regex cho Phone (10-11 số)
-        group.addRule(new RegexRule<>(
-                "departmentPhone", EmployeeDTO::getDepartmentPhone,
-          "^0[35789][0-9]{8,9}$",
-                "SĐT phòng ban phải là số (10-11 chữ số)."
-        ));
+        // // Regex cho Phone (10-11 số)
+        // group.addRule(new RegexRule<>(
+        //         "departmentPhone", EmployeeDTO::getDepartmentPhone,
+        //   "^0[35789][0-9]{8,9}$",
+        //         "SĐT phòng ban phải là số (10-11 chữ số)."
+        // ));
 
         // Regex cho Location (Địa chỉ chấp nhận nhiều dấu câu)
         group.addRule(new NotNullRule<>("departmentLocation", EmployeeDTO::getDepartmentLocation));
