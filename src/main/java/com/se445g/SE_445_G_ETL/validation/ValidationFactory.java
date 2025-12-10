@@ -1,6 +1,5 @@
 package com.se445g.SE_445_G_ETL.validation;
 
-import java.math.BigDecimal; // Import quan trọng cho BigDecimal
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;

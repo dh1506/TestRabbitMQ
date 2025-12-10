@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 public class NotNullRule<T, F> implements ValidationRule<T> {
 
+  @SuppressWarnings("unused")
   private final String fieldName;
   private final Function<T, F> getter;
   private final String customMessage;

@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 public class RegexRule<T> implements ValidationRule<T> {
 
+    @SuppressWarnings("unused")
     private final String fieldName;
     private final Function<T, String> getter;
     private final Pattern pattern;

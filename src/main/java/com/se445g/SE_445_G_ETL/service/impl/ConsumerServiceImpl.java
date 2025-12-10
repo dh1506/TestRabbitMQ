@@ -14,6 +14,7 @@ import com.se445g.SE_445_G_ETL.service.interf.LogService; // <-- IMPORT MỚI
 import com.se445g.SE_445_G_ETL.validation.ValidationFactory;
 import com.se445g.SE_445_G_ETL.validation.ValidationResult;
 import com.se445g.SE_445_G_ETL.validation.component.ValidationRule;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -100,7 +101,7 @@ public class ConsumerServiceImpl implements ConsumerService {
                     processEmployee(dto);
                     break;
                 case "SALARY":
-                    processSalary(dto);
+                    processSalarySafe(dto, runId);
                     break;
                 default:
                     log.warn("Không nhận diện được recordType: '{}'", type);
@@ -133,11 +134,37 @@ public class ConsumerServiceImpl implements ConsumerService {
         employeeRepository.save(employee);
     }
 
-    private void processSalary(EmployeeDTO dto) {
+    /**
+     * Ghi lương nhưng tránh mất dữ liệu khi employee chưa tồn tại hoặc lỗi FK.
+     * Nếu thiếu employee -> ghi vào STG_ErrorRecord để không mất record lương.
+     */
+    private void processSalarySafe(EmployeeDTO dto, String runId) {
         log.info("Processing SALARY for Employee: {}", dto.getEmployeeId());
-        STG_Salary salary = employeeMapper.dtoToSalary(dto);
-        salary.setSalaryId(null);
-        salaryRepository.save(salary);
+
+        // Nếu employee chưa có trong staging, đẩy sang bảng lỗi thay vì mất message
+        Integer empId = dto.getEmployeeId();
+        if (empId == null || !employeeRepository.existsById(empId)) {
+            ValidationResult vr = new ValidationResult();
+            vr.addError(String.format("Không tìm thấy employeeId %s trong staging, chưa thể ghi lương.", empId));
+            handleValidationError(dto, vr, runId);
+            // log thông tin để tracking
+            logService.logInfo(JOB_TYPE_CSV, runId,
+                    String.format("Salary của employeeId %s được lưu vào STG_ErrorRecord do thiếu employee.", empId));
+            return;
+        }
+
+        try {
+            STG_Salary salary = employeeMapper.dtoToSalary(dto);
+            salary.setSalaryId(null);
+            salaryRepository.save(salary);
+        } catch (DataIntegrityViolationException ex) {
+            ValidationResult vr = new ValidationResult();
+            vr.addError(String.format("Lỗi khóa ngoại khi ghi lương cho employeeId %s: %s", empId, ex.getMostSpecificCause().getMessage()));
+            handleValidationError(dto, vr, runId);
+            logService.logFailure(JOB_TYPE_CSV, runId,
+                    String.format("Salary employeeId %s bị lỗi FK, đã lưu vào STG_ErrorRecord.", empId),
+                    ex.getMessage());
+        }
     }
 
     /**
