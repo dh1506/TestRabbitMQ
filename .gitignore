@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/.metadata/
+/.apt_generated_tests/

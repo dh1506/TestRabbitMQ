@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.se445g.SE_445_G_ETL.service.interf.CSVProducerService;
 import com.se445g.SE_445_G_ETL.service.interf.MySQLProducerService;
+import com.se445g.SE_445_G_ETL.service.interf.TargetTransformService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +17,7 @@ public class ETLController {
 
     private final CSVProducerService CSVProducer;
     private final MySQLProducerService MySQLProducer;
+    private final TargetTransformService TargetTransform;
 
     @PostMapping("/send-csv")
     public String sendMessageCSV() {
@@ -28,5 +30,11 @@ public class ETLController {
     public String sendMessageMySQL() {
         MySQLProducer.sendMySQLData();
         return "Đã gửi CSV lên rabbitMQ";
+    }
+
+    @PostMapping("/transform-target")
+    public String transformTarget() {
+        TargetTransform.loadToTarget();
+        return "Đã transform dữ liệu từ staging sang target";
     }
 }

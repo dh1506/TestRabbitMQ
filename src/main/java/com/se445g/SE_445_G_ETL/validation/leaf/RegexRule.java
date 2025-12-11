@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 public class RegexRule<T> implements ValidationRule<T> {
 
+    @SuppressWarnings("unused")
     private final String fieldName;
     private final Function<T, String> getter;
     private final Pattern pattern;
@@ -29,7 +30,9 @@ public class RegexRule<T> implements ValidationRule<T> {
             return result;
         }
 
-        if (!pattern.matcher(value).matches()) {
+      String normalizedValue = value.trim();
+
+        if (!pattern.matcher(normalizedValue).matches()) {
             result.addError(String.format("%s (Giá trị hiện tại: '%s')", customMessage, value));
         }
 
